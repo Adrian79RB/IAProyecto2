@@ -12,7 +12,6 @@ public class Unit : MonoBehaviour
     public float moveSpeed;
 
     private GM gm;
-
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
