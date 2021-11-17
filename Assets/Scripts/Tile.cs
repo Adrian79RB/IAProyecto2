@@ -67,7 +67,6 @@ public class Tile : MonoBehaviour
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             unit.hasMoved = true;
             unit.hasAttacked = true;
-            IAagent.AddEnemyToList(unit.gameObject);
             gm.ResetTiles();
             gm.createdUnit = null;
         } else if (isCreatable == true && gm.createdVillage != null) {

@@ -136,7 +136,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void GetEnemies() {
+    public void GetEnemies() {
     
         enemiesInRange.Clear();
 
@@ -160,7 +160,7 @@ public class Unit : MonoBehaviour
         StartCoroutine(StartMovement(movePos));
     }
 
-    void Attack(Unit enemy) {
+    public void Attack(Unit enemy) {
         hasAttacked = true;
 
         int enemyDamege = attackDamage - enemy.armor;

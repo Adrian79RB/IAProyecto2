@@ -19,11 +19,12 @@ public class Agent : MonoBehaviour
     ForwardModel forwardModel;
 
     Transform tilesFather;
-    // Enemy Units
-    List<GameObject> enemyUnits;
 
     // Ally Units
     List<GameObject> allyUnits;
+
+    // Enemy King
+    GameObject enemyKing;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +32,13 @@ public class Agent : MonoBehaviour
         gameManager = FindObjectOfType<GM>();
         tilesFather = GameObject.Find("Tiles").transform;
 
+        enemyKing = GameObject.Find("Dark King");
         Transform units = GameObject.Find("Units").transform;
-        enemyUnits = new List<GameObject>();
         allyUnits = new List<GameObject>();
 
         for (int i = 0; i < units.childCount; i++)
         {
-            if (units.GetChild(i).name.Contains("Dark"))
-                enemyUnits.Add(units.GetChild(i).gameObject);
-            else
+            if(units.GetChild(i).name.Contains("Blue"))
                 allyUnits.Add(units.GetChild(i).gameObject);
         }
 
@@ -161,14 +160,32 @@ public class Agent : MonoBehaviour
         gameManager.createdUnit = null;
     }
 
-    public void AddEnemyToList(GameObject enemy)
-    {
-        enemyUnits.Add(enemy);
-    }
-
-
     public bool tryToAttack()
     {
-        
+        for (int i = 0; i < allyUnits.Count; i++)
+        {
+            Unit ally = allyUnits[i].GetComponent<Unit>();
+            ally.GetEnemies();
+            if(!ally.hasAttacked && ally.enemiesInRange.Count > 0)
+            {
+                Unit targetEnemy = ally.enemiesInRange[0];
+                for(int j = 1; j < ally.enemiesInRange.Count; j++)
+                {
+                    if(ally.enemiesInRange[j].gameObject == enemyKing)
+                    {
+                        targetEnemy = enemyKing.GetComponent<Unit>();
+                        break;
+                    }
+                    else if(ally.enemiesInRange[j].health < targetEnemy.health)
+                    {
+                        targetEnemy = ally.enemiesInRange[j];
+                    }
+                }
+
+                ally.Attack(targetEnemy);
+            }
+        }
+
+        return true;
     }
 }
