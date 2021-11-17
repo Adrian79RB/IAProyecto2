@@ -14,6 +14,7 @@ public class Tile : MonoBehaviour
     public bool isCreatable;
 
     private GM gm;
+    private Agent IAagent;
 
     public float amount;
     private bool sizeIncrease;
@@ -25,7 +26,7 @@ public class Tile : MonoBehaviour
 		source = GetComponent<AudioSource>();
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
-
+        IAagent = GameObject.Find("Agent").GetComponent<Agent>();
     }
 
     public bool isClear() // does this tile have an obstacle on it. Yes or No?
@@ -66,6 +67,7 @@ public class Tile : MonoBehaviour
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             unit.hasMoved = true;
             unit.hasAttacked = true;
+            IAagent.AddEnemyToList(unit.gameObject);
             gm.ResetTiles();
             gm.createdUnit = null;
         } else if (isCreatable == true && gm.createdVillage != null) {
