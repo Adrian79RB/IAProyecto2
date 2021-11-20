@@ -155,6 +155,20 @@ public class Move : TaskCollection
     }
 }
 
+public class AttackCondition : TaskCollection
+{
+    public override int Run(Agent agent)
+    {
+        state = TaskStates.RUNNING;
+        if (agent.checkEnemiesContact())
+            state = TaskStates.SUCCEEDED;
+        else
+            state = TaskStates.FAILED;
+
+        return state;
+    }
+}
+
 public class Attack : TaskCollection
 {
     public override int Run(Agent agent)

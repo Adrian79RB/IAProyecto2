@@ -6,22 +6,32 @@ using UnityEngine;
 public class ForwardModel
 {
     public GM gameStateInstance;
-    public void MoveUnit(Unit unit, int row, int col)
+
+    public ForwardModel(GM initalState)
+    {
+        gameStateInstance = initalState;
+    }
+    public void MoveUnit(Unit unit, Tile tile, GM currentState)
     {
 
     }
 
-    public void Attack (Unit allyUnit, Unit enemyUnit)
+    public void SetVillage(Village village, Tile tile, GM currentState)
     {
 
     }
 
-    public void CreateUnit ( Unit unit)
+    public void Attack (Unit allyUnit, Unit enemyUnit, GM currentState)
     {
 
     }
 
-    public void CreateVillage (Village village)
+    public void CreateUnit ( Unit unit, GM currentState)
+    {
+
+    }
+
+    public void CreateVillage (Village village, GM currentState)
     {
 
     }

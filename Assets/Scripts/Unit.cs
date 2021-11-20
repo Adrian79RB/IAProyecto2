@@ -38,6 +38,7 @@ public class Unit : MonoBehaviour
     public bool isKing;
 
 	private AudioSource source;
+    private List<Tile> walkableTiles;
 
     public Text displayedText; 
 
@@ -117,6 +118,29 @@ public class Unit : MonoBehaviour
     }
 
 
+    public List<Tile> GetTilesArray()
+    {
+        ResetWeaponIcon();
+
+        if (gm.selectedUnit != null)
+        {
+            gm.selectedUnit.isSelected = false;
+        }
+        gm.ResetTiles();
+        gm.selectedUnit = this;
+
+        isSelected = true;
+        if (source != null)
+        {
+            source.Play();
+        }
+
+        walkableTiles = new List<Tile>();
+        GetWalkableTiles();
+        GetEnemies();
+        return walkableTiles;
+    }
+
 
     void GetWalkableTiles() { // Looks for the tiles the unit can walk on
         if (hasMoved == true) {
@@ -130,8 +154,8 @@ public class Unit : MonoBehaviour
                 if (tile.isClear() == true)
                 { // is the tile clear from any obstacles
                     tile.Highlight();
+                    walkableTiles.Add(tile);
                 }
-
             }          
         }
     }

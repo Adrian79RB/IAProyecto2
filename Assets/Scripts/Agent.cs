@@ -22,6 +22,9 @@ public class Agent : MonoBehaviour
 
     // Ally Units
     List<GameObject> allyUnits;
+    
+    int enemiesCount;
+    Transform units;
 
     // Enemy King
     GameObject enemyKing;
@@ -29,25 +32,45 @@ public class Agent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        tree = new BehaviourTree();
         gameManager = FindObjectOfType<GM>();
         tilesFather = GameObject.Find("Tiles").transform;
 
         enemyKing = GameObject.Find("Dark King");
-        Transform units = GameObject.Find("Units").transform;
+        enemiesCount = 0;
+        units = GameObject.Find("Units").transform;
         allyUnits = new List<GameObject>();
 
         for (int i = 0; i < units.childCount; i++)
         {
-            if(units.GetChild(i).name.Contains("Blue"))
+            if (units.GetChild(i).name.Contains("Blue"))
                 allyUnits.Add(units.GetChild(i).gameObject);
+            else
+                enemiesCount++;
         }
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TurnChanged()
     {
-        
+        allyUnits = new List<GameObject>();
+        enemiesCount = 0;
+
+        for (int i = 0; i < units.childCount; i++)
+        {
+            if (units.GetChild(i).name.Contains("Blue"))
+                allyUnits.Add(units.GetChild(i).gameObject);
+            else
+                enemiesCount++;
+        }
+
+        if (tree.StartBehaviour(this) == 2){
+            Debug.Log("Funciona y se ha hecho algo.");
+        }
+        else if(tree.StartBehaviour(this) == 3)
+        {
+            Debug.Log("Funciona pero no ha hecho nada");
+        }
     }
 
     public bool tryToShop()
@@ -66,22 +89,22 @@ public class Agent : MonoBehaviour
                     float randomChoose = UnityEngine.Random.value;
                     if (randomChoose < 0.2)
                     {
-                        forwardModel.CreateUnit(knight.GetComponent<Unit>());
+                        forwardModel.CreateUnit(knight.GetComponent<Unit>(), gameManager);
                         unitsBought[j, 0]++;
                     }
                     else if (randomChoose < 0.4)
                     {
-                        forwardModel.CreateUnit(archer.GetComponent<Unit>());
+                        forwardModel.CreateUnit(archer.GetComponent<Unit>(), gameManager);
                         unitsBought[j, 1]++;
                     }
                     else if (randomChoose < 0.6)
                     {
-                        forwardModel.CreateUnit(dragon.GetComponent<Unit>());
+                        forwardModel.CreateUnit(dragon.GetComponent<Unit>(), gameManager);
                         unitsBought[j, 2]++;
                     }
                     else if (randomChoose < 0.8)
                     {
-                        forwardModel.CreateVillage(village.GetComponent<Village>());
+                        forwardModel.CreateVillage(village.GetComponent<Village>(), gameManager);
                         unitsBought[j, 3]++;
                     }
 
@@ -103,9 +126,30 @@ public class Agent : MonoBehaviour
         return false;
     }
 
-    internal bool tryToMove()
+    public bool tryToMove()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < allyUnits.Count; i++)
+        {
+            Unit ally = allyUnits[i].GetComponent<Unit>();
+            var tiles = ally.GetTilesArray();
+            float maxScore = 0f;
+            Tile targetTile = null;
+
+            foreach(Tile tile in tiles)
+            {
+                forwardModel.MoveUnit(ally, tile, gameManager);
+                var score = forwardModel.HeuristicFunction();
+                if (score > maxScore)
+                {
+                    maxScore = score;
+                    targetTile = tile;
+                }
+            }
+
+            ally.Move(targetTile.transform);
+        }
+
+        return true;
     }
 
     private void BuyNewUnit(int scoreIndex, int[,] unitsBought)
@@ -137,16 +181,27 @@ public class Agent : MonoBehaviour
 
     private void chooseCharacterCreationTile()
     {
-        float minDistance = Mathf.Infinity;
+        float maxScore = 0f;
         int choosenIndex = 0;
         for (int i = 0; i < tilesFather.childCount; i++)
         {
             if (tilesFather.GetChild(i).GetComponent<Tile>().isCreatable)
             {
-                float distance = Vector3.Distance(tilesFather.GetChild(i).position, enemyKing.transform.position);
-                if(distance < minDistance)
+                var score = 0f;
+                if (gameManager.createdUnit != null)
                 {
-                    minDistance = distance;
+                    forwardModel.MoveUnit(gameManager.createdUnit, tilesFather.GetChild(i).GetComponent<Tile>(), gameManager);
+                    score = forwardModel.HeuristicFunction();
+                }
+                else if(gameManager.createdVillage != null)
+                {
+                    forwardModel.SetVillage(gameManager.createdVillage, tilesFather.GetChild(i).GetComponent<Tile>(), gameManager);
+                    score = forwardModel.HeuristicFunction();
+                }
+
+                if(score > maxScore)
+                {
+                    maxScore = score;
                     choosenIndex = i;
                 }
             }
@@ -169,15 +224,15 @@ public class Agent : MonoBehaviour
             if(!ally.hasAttacked && ally.enemiesInRange.Count > 0)
             {
                 Unit targetEnemy = ally.enemiesInRange[0];
+                float maxScore = 0f;
+
                 for(int j = 1; j < ally.enemiesInRange.Count; j++)
                 {
-                    if(ally.enemiesInRange[j].gameObject == enemyKing)
+                    forwardModel.Attack(ally, ally.enemiesInRange[j], gameManager);
+                    var score = forwardModel.HeuristicFunction();
+                    if (score > maxScore)
                     {
-                        targetEnemy = enemyKing.GetComponent<Unit>();
-                        break;
-                    }
-                    else if(ally.enemiesInRange[j].health < targetEnemy.health)
-                    {
+                        maxScore = score;
                         targetEnemy = ally.enemiesInRange[j];
                     }
                 }
@@ -187,5 +242,27 @@ public class Agent : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool checkEnemiesContact()
+    {
+        List<Unit> enemiesInContact = new List<Unit>();
+
+        for(int i = 0; i < allyUnits.Count; i++)
+        {
+            for (int j = 0; j < allyUnits[i].GetComponent<Unit>().enemiesInRange.Count; j++)
+            {
+                var enemy = allyUnits[i].GetComponent<Unit>().enemiesInRange[j];
+                if (!enemiesInContact.Contains(enemy))
+                {
+                    enemiesInContact.Add(enemy);
+                }
+            }
+        }
+
+        if (enemiesInContact.Count == enemiesCount)
+            return true;
+        else
+            return false;
     }
 }
