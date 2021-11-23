@@ -12,7 +12,6 @@ public class Unit : MonoBehaviour
     public float moveSpeed;
 
     private GM gm;
-
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
@@ -162,9 +161,32 @@ public class Unit : MonoBehaviour
 
     void Attack(Unit enemy) {
         hasAttacked = true;
-
         int enemyDamege = attackDamage - enemy.armor;
         int unitDamage = enemy.defenseDamage - armor;
+        int modifier =0;
+        if(transform.tag == "Archer"){
+            if(enemy.tag == "Knight"){
+                enemyDamege = enemyDamege - enemy.armor;
+            }
+        }
+        if(transform.tag == "Knight"){
+            if(enemy.tag == "Bat"){
+                enemyDamege=0;
+            }
+            if(enemy.tag == "Archer"){
+                unitDamage = unitDamage - armor;
+            }
+        }
+        if(transform.tag == "Bat"){
+            if(enemy.tag == "Knight"){
+                unitDamage = 0;
+            }
+        }
+        if(transform.tag == "King"){
+
+        }
+        
+        
 
         if (enemyDamege >= 1)
         {
