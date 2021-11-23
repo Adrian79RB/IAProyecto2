@@ -86,7 +86,13 @@ public class Unit : MonoBehaviour
 				}
 				
                 GetWalkableTiles();
-                GetEnemies();
+                if(transform.tag == "Siege"){
+                    GetVillages();
+                }
+                else{
+                    GetEnemies();
+                }
+                
             }
 
         }
@@ -155,12 +161,15 @@ public class Unit : MonoBehaviour
     }
 
     void GetVillages(){
+        Debug.Log("He entrado");
         enemyVillages.Clear();
 
         Village[] villages = FindObjectsOfType<Village>();
         foreach (Village village in villages){
+            Debug.Log("ForEach");
             if(Mathf.Abs(transform.position.x - village.transform.position.x)+Mathf.Abs(transform.position.y - village.transform.position.y)<= attackRadius){
-                if(village.playerNumber != gm.playerTurn){
+                if(village.playerNumber != gm.playerTurn && !hasAttacked){
+                    Debug.Log("IF");
                     enemyVillages.Add(village);
                     village.weaponIcon.SetActive(true);
                 }
@@ -299,6 +308,7 @@ public class Unit : MonoBehaviour
         hasMoved = true;
         ResetWeaponIcon();
         GetEnemies();
+        GetVillages();
         gm.MoveInfoPanel(this);
     }
 

@@ -150,7 +150,7 @@ MonoBehaviour:
   playerNumber: 2
   cost: 100
   health: 25
-  weaponIcon: {fileID: 0}
+  weaponIcon: {fileID: 6498002310882265172}
 --- !u!1 &4688297138893427202
 GameObject:
   m_ObjectHideFlags: 0
