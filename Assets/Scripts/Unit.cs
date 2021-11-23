@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
+    public List<Village> enemyVillages = new List<Village>();
 
     public int playerNumber;
 
@@ -149,6 +150,20 @@ public class Unit : MonoBehaviour
                     enemy.weaponIcon.SetActive(true);
                 }
 
+            }
+        }
+    }
+
+    void GetVillages(){
+        enemyVillages.Clear();
+
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach (Village village in villages){
+            if(Mathf.Abs(transform.position.x - village.transform.position.x)+Mathf.Abs(transform.position.y - village.transform.position.y)<= attackRadius){
+                if(village.playerNumber != gm.playerTurn){
+                    enemyVillages.Add(village);
+                    village.weaponIcon.SetActive(true);
+                }
             }
         }
     }
