@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Archer
   - infoPanel
+  - Knight
+  - Bat
+  - House
+  - Siege
+  - King
   layers:
   - Default
   - TransparentFX
