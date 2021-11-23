@@ -16,6 +16,7 @@ public class Unit : MonoBehaviour
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
+    public List<Village> villagesInRange = new List<Village>();
 
     public int playerNumber;
 
@@ -32,6 +33,7 @@ public class Unit : MonoBehaviour
     public int cost;
 
 	public GameObject deathEffect;
+    public GameObject[] trees; 
 
 	private Animator camAnim;
 
@@ -39,7 +41,9 @@ public class Unit : MonoBehaviour
 
 	private AudioSource source;
 
-    public Text displayedText; 
+    public Text displayedText;
+
+    private Village village;
 
     private void Start()
     {
@@ -47,6 +51,8 @@ public class Unit : MonoBehaviour
 		camAnim = Camera.main.GetComponent<Animator>();
         gm = FindObjectOfType<GM>();
         UpdateHealthDisplay();
+        village = FindObjectOfType<Village>();
+        trees = GameObject.FindGameObjectsWithTag("Tree");
     }
 
     private void UpdateHealthDisplay ()
@@ -70,12 +76,16 @@ public class Unit : MonoBehaviour
             gm.ResetTiles();
 
         }
+
         else {
             if (playerNumber == gm.playerTurn) { // select unit only if it's his turn
-                if (gm.selectedUnit != null)
+                if (gm.selectedUnit != null )
                 { // deselect the unit that is currently selected, so there's only one isSelected unit at a time
                     gm.selectedUnit.isSelected = false;
                 }
+              
+                
+
                 gm.ResetTiles();
 
                 gm.selectedUnit = this;
@@ -86,25 +96,55 @@ public class Unit : MonoBehaviour
 				}
 				
                 GetWalkableTiles();
+                GetVillages();
                 GetEnemies();
+               
             }
+
+           
 
         }
 
 
 
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
+        Debug.Log("Esta unidad: " + this.name + "; Nombre de la unidad selccionada" + gm.selectedUnit.name);
+        Debug.Log(villagesInRange.Count);
+        Debug.Log(gm.selectedUnit.villagesInRange.Count);
         if (col != null)
         {
+            if (gm.selectedUnit.tag == "Ariete")
+                gm.selectedUnit.hasAttacked = false;
+            Debug.Log("Entra1");
             Unit unit = col.GetComponent<Unit>(); // double check that what we clicked on is a unit
-            if (unit != null && gm.selectedUnit != null)
+            
+            //Village village = col.GetComponent<Village>();
+            if (unit != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Ariete")
             {
-                if (gm.selectedUnit.enemiesInRange.Contains(unit) && !gm.selectedUnit.hasAttacked)
+                if (gm.selectedUnit.enemiesInRange.Contains(unit) && !gm.selectedUnit.hasAttacked )
                 { // does the currently selected unit have in his list the enemy we just clicked on
                     gm.selectedUnit.Attack(unit);
 
                 }
+                
+               
             }
+            
+            /*else if (gm.selectedUnit != null )
+            {
+                Debug.Log(gm.selectedUnit.villagesInRange[0]);
+                Debug.Log(village);
+                Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
+                Debug.Log(gm.selectedUnit);
+                if  (gm.selectedUnit.villagesInRange.Contains(village))
+                { // does the currently selected unit have in his list the enemy we just clicked on
+                    Debug.Log("Entra3");
+                    gm.selectedUnit.AttackVillage(village);
+
+                }
+
+
+            }*/
         }
     }
 
@@ -145,7 +185,7 @@ public class Unit : MonoBehaviour
         {
             if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
-                if (enemy.playerNumber != gm.playerTurn && !hasAttacked) { // make sure you don't attack your allies
+                if (enemy.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag != "Ariete") { // make sure you don't attack your allies
                     enemiesInRange.Add(enemy);
                     enemy.weaponIcon.SetActive(true);
                 }
@@ -166,16 +206,27 @@ public class Unit : MonoBehaviour
         int enemyDamege = attackDamage - enemy.armor;
         int unitDamage = enemy.defenseDamage - armor;
 
-        if (enemyDamege >= 1)
+        if (enemyDamege >= 1 && transform.tag != "Ariete")
         {
+            if (transform.tag == "Archer")
+                for (int i = 0; i < trees.Length; i++)
+                    if ((Mathf.Round(trees[i].transform.position.x) == transform.position.x && trees[i].transform.position.y >= transform.position.y && trees[i].transform.position.y <= enemy.transform.position.y) || (Mathf.Round(trees[i].transform.position.x) == transform.position.x && trees[i].transform.position.y <= transform.position.y && trees[i].transform.position.y >= enemy.transform.position.y))
+                        enemyDamege--;
+                    else if ((Mathf.Round(trees[i].transform.position.y) == transform.position.y && trees[i].transform.position.x >= transform.position.x && trees[i].transform.position.x <= enemy.transform.position.x) || (Mathf.Round(trees[i].transform.position.y) == transform.position.y && trees[i].transform.position.x <= transform.position.x && trees[i].transform.position.x >= enemy.transform.position.x))
+                        enemyDamege--;
+
+
             enemy.health -= enemyDamege;
             enemy.UpdateHealthDisplay();
             DamageIcon d = Instantiate(damageIcon, enemy.transform.position, Quaternion.identity);
             d.Setup(enemyDamege);
         }
 
-        if (transform.tag == "Archer" && enemy.tag != "Archer")
+        if (transform.tag == "Archer" && enemy.tag != "Ariete")
         {
+            for (int i = 0; i < trees.Length; i++)
+                if (trees[i].transform.position.x == transform.position.x || trees[i].transform.position.y == transform.position.y)
+                    enemyDamege--;
             if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= 1) // check is the enemy is near enough to attack
             {
                 if (unitDamage >= 1)
@@ -238,11 +289,80 @@ public class Unit : MonoBehaviour
 
     }
 
+    public void AttackVillage(Village village)
+    {
+        hasAttacked = true;
+
+        int villageDamege = attackDamage - village.armor;
+        int unitDamage = village.defenseDamage - armor;
+        Debug.Log("Quiere atacar");
+        if (transform.tag == "Ariete")
+        {
+            Debug.Log("Entra");
+            if (villageDamege >= 1)
+            {
+                village.health -= villageDamege;
+                DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
+                d.Setup(villageDamege);
+            }
+
+            else
+            {
+                if (unitDamage >= 1)
+                {
+                    health -= unitDamage;
+                    UpdateHealthDisplay();
+                    DamageIcon d = Instantiate(damageIcon, transform.position, Quaternion.identity);
+                    d.Setup(unitDamage);
+                }
+            }
+
+            if (village.health <= 0)
+            {
+
+                if (deathEffect != null)
+                {
+                    Instantiate(deathEffect, village.transform.position, Quaternion.identity);
+                    camAnim.SetTrigger("shake");
+                }
+
+
+                GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
+                Destroy(village.gameObject);
+
+            }
+
+            if (health <= 0)
+            {
+
+                if (deathEffect != null)
+                {
+                    Instantiate(deathEffect, village.transform.position, Quaternion.identity);
+                    camAnim.SetTrigger("shake");
+                }
+
+                gm.ResetTiles(); // reset tiles when we die
+                gm.RemoveInfoPanel(this);
+                Destroy(gameObject);
+            }
+
+            gm.UpdateInfoStats();
+        }
+
+    }
+
+
     public void ResetWeaponIcon() {
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
         {
             enemy.weaponIcon.SetActive(false);
+        }
+
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach (Village village in villages)
+        {
+            village.weaponIcon.SetActive(false);
         }
     }
 
@@ -262,9 +382,31 @@ public class Unit : MonoBehaviour
         hasMoved = true;
         ResetWeaponIcon();
         GetEnemies();
+        GetVillages();
         gm.MoveInfoPanel(this);
     }
 
+    void GetVillages()
+    {
+         
+        villagesInRange.Clear();
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach (Village village in villages)
+        {
+            if (Mathf.Abs(transform.position.x - village.transform.position.x) + Mathf.Abs(transform.position.y - village.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
+            {
+                if (village.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag == "Ariete")
+                {
+                    // make sure you don't attack your allies
+                    villagesInRange.Add(village);
+                    village.weaponIcon.SetActive(true);
+                    Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
+                }
+                
+
+            }
+        }
+    }
 
 
 

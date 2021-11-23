@@ -423,8 +423,8 @@ GameObject:
   - component: {fileID: 1771498148}
   - component: {fileID: 1562438027}
   m_Layer: 9
-  m_Name: Dark Knight
-  m_TagString: Untagged
+  m_Name: Dark Ariete
+  m_TagString: Ariete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   hasMoved: 0
-  tileSpeed: 2
+  tileSpeed: 1
   moveSpeed: 10
   attackRadius: 1
   hasAttacked: 0
@@ -517,11 +517,11 @@ MonoBehaviour:
   weaponIcon: {fileID: 699492358}
   health: 5
   attackDamage: 3
-  defenseDamage: 2
-  armor: 1
+  defenseDamage: 0
+  armor: 0
   damageIcon: {fileID: -5891122600849735030, guid: eb780ffd3e6d6b64d993bc8583781d30,
     type: 3}
-  cost: 40
+  cost: 100
   deathEffect: {fileID: 8882834092664154197, guid: 43e58a09770a414488a4edf9a2bb5ea7,
     type: 3}
   isKing: 0

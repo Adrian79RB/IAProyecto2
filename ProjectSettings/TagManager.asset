@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Archer
   - infoPanel
+  - Ariete
+  - Tree
   layers:
   - Default
   - TransparentFX

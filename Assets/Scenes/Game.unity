@@ -776,7 +776,7 @@ GameObject:
   - component: {fileID: 14923564}
   m_Layer: 0
   m_Name: Tree (2)
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1764,7 +1764,7 @@ GameObject:
   - component: {fileID: 95266750}
   m_Layer: 0
   m_Name: Tree (1)
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2995,7 +2995,7 @@ GameObject:
   - component: {fileID: 147229324}
   m_Layer: 0
   m_Name: Tree Bunch (1)
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3077,7 +3077,7 @@ GameObject:
   - component: {fileID: 150448513}
   m_Layer: 0
   m_Name: Tree Bunch (2)
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8926,7 +8926,7 @@ GameObject:
   - component: {fileID: 450981991}
   m_Layer: 0
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16125,7 +16125,7 @@ GameObject:
   - component: {fileID: 756699015}
   m_Layer: 0
   m_Name: Tree Bunch (4)
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18296,12 +18296,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1570414222}
-        m_MethodName: BuyVillage
+        m_MethodName: BuyUnit
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 726293821197588629, guid: da3435065a89e2442b5138b621f7826c,
+          m_ObjectArgument: {fileID: 794876514, guid: fd1a9553fd6aec3409b95fa9d2cc699b,
             type: 3}
-          m_ObjectArgumentAssemblyTypeName: Village, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Unit, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -34190,6 +34190,7 @@ MonoBehaviour:
   createdVillage: {fileID: 0}
   blueVictory: {fileID: 243264726}
   darkVictory: {fileID: 1969939416}
+  village: {fileID: 0}
 --- !u!4 &1570414221
 Transform:
   m_ObjectHideFlags: 0
@@ -46994,12 +46995,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1570414222}
-        m_MethodName: BuyVillage
+        m_MethodName: BuyUnit
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 4905471955937416695, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+          m_ObjectArgument: {fileID: 1888838832, guid: 69c45bad53862d04496347dd4754f2cd,
             type: 3}
-          m_ObjectArgumentAssemblyTypeName: Village, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: Unit, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -50260,6 +50261,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748344637}
     m_Modifications:
+    - target: {fileID: 2183029763974304237, guid: da3435065a89e2442b5138b621f7826c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c,
         type: 3}
       propertyPath: m_Name
@@ -50319,6 +50325,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197349041260842094, guid: da3435065a89e2442b5138b621f7826c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9197349041260842094, guid: da3435065a89e2442b5138b621f7826c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da3435065a89e2442b5138b621f7826c, type: 3}
@@ -53471,6 +53487,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748344637}
     m_Modifications:
+    - target: {fileID: 3186559093315037646, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097931518877388482, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097931518877388482, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097931518877388482, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5406757
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097931518877388482, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5406757
+      objectReference: {fileID: 0}
+    - target: {fileID: 4097931518877388482, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5406757
+      objectReference: {fileID: 0}
     - target: {fileID: 4688297137751264696, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -53530,6 +53576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Blue Village
+      objectReference: {fileID: 0}
+    - target: {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}

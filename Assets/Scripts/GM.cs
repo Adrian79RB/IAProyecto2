@@ -40,6 +40,8 @@ public class GM : MonoBehaviour
 
 	private AudioSource source;
 
+    public Village village;
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();
