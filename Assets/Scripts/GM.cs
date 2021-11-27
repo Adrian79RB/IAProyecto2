@@ -79,7 +79,10 @@ public class GM : MonoBehaviour
             UpdateInfoStats();
 
         } else {
-            unitInfoPanel.SetActive(false);
+            if(currentInfoVillage == null){
+                unitInfoPanel.SetActive(false);
+            }
+            
             currentInfoUnit = null;
         }
 
@@ -94,7 +97,10 @@ public class GM : MonoBehaviour
 
         }
         else{
-            unitInfoPanel.SetActive(false);
+            if(currentInfoUnit==null){
+                unitInfoPanel.SetActive(false);
+            }
+            
             currentInfoVillage = null;
         }
     }
