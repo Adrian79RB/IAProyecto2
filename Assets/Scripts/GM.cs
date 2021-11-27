@@ -21,6 +21,7 @@ public class GM : MonoBehaviour
     public GameObject unitInfoPanel;
     public Vector2 unitInfoPanelShift;
     Unit currentInfoUnit;
+    Village currentInfoVillage;
     public Text heathInfo;
     public Text attackDamageInfo;
     public Text armorInfo;
@@ -83,6 +84,20 @@ public class GM : MonoBehaviour
         }
 
     }
+    public void UpdateInfoPanVil(Village village){
+        if(village.Equals(currentInfoVillage)== false){
+            unitInfoPanel.transform.position =(Vector2)village.transform.position + unitInfoPanelShift;
+            unitInfoPanel.SetActive(true);
+
+            currentInfoVillage = village;
+            UpdateInfoVillage();
+
+        }
+        else{
+            unitInfoPanel.SetActive(false);
+            currentInfoVillage = null;
+        }
+    }
 
     // Updates the stats of the infoPanel
     public void UpdateInfoStats() {
@@ -93,6 +108,15 @@ public class GM : MonoBehaviour
             armorInfo.text = currentInfoUnit.armor.ToString();
             heathInfo.text = currentInfoUnit.health.ToString();
         }
+    }
+    public void UpdateInfoVillage(){
+        if (currentInfoVillage != null)
+        {
+            attackDamageInfo.text = "X";
+            defenseDamageInfo.text = "X";
+            armorInfo.text = "X";
+            heathInfo.text = currentInfoVillage.health.ToString();
+        }       
     }
 
     // Moves the udpate panel (if the panel is actived on a unit and that unit moves)
