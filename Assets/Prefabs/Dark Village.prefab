@@ -4940,6 +4940,7 @@ GameObject:
   - component: {fileID: 7767452286446655038}
   - component: {fileID: 7767452286446655025}
   - component: {fileID: 726293821197588629}
+  - component: {fileID: 1525444925564633459}
   m_Layer: 9
   m_Name: Dark Village
   m_TagString: House
@@ -5076,3 +5077,16 @@ MonoBehaviour:
   cost: 100
   health: 25
   weaponIcon: {fileID: 4896271811897834879}
+--- !u!114 &1525444925564633459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7767452286446655037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1733ca46145ac2b4b8d68be8dee20677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 0.35

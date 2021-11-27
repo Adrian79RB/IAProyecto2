@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4688297137751264697}
   - component: {fileID: 4688297137751264694}
   - component: {fileID: 4905471955937416695}
+  - component: {fileID: 5120050762969339956}
   m_Layer: 9
   m_Name: Blue Village
   m_TagString: House
@@ -151,6 +152,19 @@ MonoBehaviour:
   cost: 100
   health: 25
   weaponIcon: {fileID: 6498002310882265172}
+--- !u!114 &5120050762969339956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4688297137751264698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1733ca46145ac2b4b8d68be8dee20677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 0.35
 --- !u!1 &4688297138893427202
 GameObject:
   m_ObjectHideFlags: 0

@@ -290,6 +290,10 @@ public class Unit : MonoBehaviour
         {
             enemy.weaponIcon.SetActive(false);
         }
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach(Village village in villages){
+            village.weaponIcon.SetActive(false);
+        }
     }
 
     IEnumerator StartMovement(Transform movePos) { // Moves the character to his new position.
