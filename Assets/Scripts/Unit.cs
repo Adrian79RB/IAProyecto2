@@ -72,7 +72,7 @@ public class Unit : MonoBehaviour
 
         }
         else {
-            if (playerNumber == gm.playerTurn) { // select unit only if it's his turn
+            if (playerNumber == 1) { // select unit only if it's his turn
                 if (gm.selectedUnit != null)
                 { // deselect the unit that is currently selected, so there's only one isSelected unit at a time
                     gm.selectedUnit.isSelected = false;
@@ -111,7 +111,7 @@ public class Unit : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && playerNumber == 1)
         {
             gm.UpdateInfoPanel(this);
         }
@@ -222,7 +222,11 @@ public class Unit : MonoBehaviour
 
         if (enemy.health <= 0)
         {
-         
+            if(gm.playerTurn == 2)
+            {
+                gm.agent.enemiesKilled++;
+            }
+
             if (deathEffect != null){
 				Instantiate(deathEffect, enemy.transform.position, Quaternion.identity);
 				camAnim.SetTrigger("shake");
@@ -288,8 +292,4 @@ public class Unit : MonoBehaviour
         GetEnemies();
         gm.MoveInfoPanel(this);
     }
-
-
-
-
 }

@@ -15,6 +15,8 @@ public class Agent : MonoBehaviour
     public GameObject dragon;
     public GameObject village;
 
+    public int enemiesKilled;
+
     BehaviourTree tree;
     ForwardModel forwardModel;
 
@@ -49,9 +51,10 @@ public class Agent : MonoBehaviour
                 enemiesCount++;
         }
 
+        enemiesKilled = 0;
     }
 
-    public void TurnChanged()
+    public void StartTurn()
     {
         allyUnits = new List<GameObject>();
         enemiesCount = 0;
@@ -73,44 +76,55 @@ public class Agent : MonoBehaviour
         }
     }
 
+    public void EndAgentTurn()
+    {
+        allyUnits = null;
+        enemiesCount = 0;
+
+        gameManager.EndTurn();
+    }
+
     public bool tryToShop()
     {
         if (forwardModel.gameStateInstance.player2Gold > 40 && UnityEngine.Random.value > 0.2)
         {
+            Unit[] units = FindObjectsOfType<Unit>();
+            Village[] villages = FindObjectsOfType<Village>();
             float[] scores = new float[maxActions];
             int[,] unitsBought = new int[maxActions, 4];
             for (int i = 0; i < maxActions; i++)
             {
                 int maxTries = Mathf.RoundToInt(forwardModel.gameStateInstance.player2Gold / 40);
                 int j = 0;
+                float score = 0f;
 
                 while (j < maxTries && forwardModel.gameStateInstance.player2Gold >= 40)
                 {
                     float randomChoose = UnityEngine.Random.value;
                     if (randomChoose < 0.2)
                     {
-                        forwardModel.CreateUnit(knight.GetComponent<Unit>(), gameManager);
+                        score += forwardModel.CreateUnit(knight.GetComponent<Unit>(), units, villages);
                         unitsBought[j, 0]++;
                     }
                     else if (randomChoose < 0.4)
                     {
-                        forwardModel.CreateUnit(archer.GetComponent<Unit>(), gameManager);
+                        score += forwardModel.CreateUnit(archer.GetComponent<Unit>(), units, villages);
                         unitsBought[j, 1]++;
                     }
                     else if (randomChoose < 0.6)
                     {
-                        forwardModel.CreateUnit(dragon.GetComponent<Unit>(), gameManager);
+                        score += forwardModel.CreateUnit(dragon.GetComponent<Unit>(), units, villages);
                         unitsBought[j, 2]++;
                     }
                     else if (randomChoose < 0.8)
                     {
-                        forwardModel.CreateVillage(village.GetComponent<Village>(), gameManager);
+                        score += forwardModel.CreateVillage(village.GetComponent<Village>(), units, villages);
                         unitsBought[j, 3]++;
                     }
 
                     j++;
                 }
-                scores[i] = forwardModel.HeuristicFunction();
+                scores[i] = score;
             }
 
             int scoreIndex = 0;
@@ -128,6 +142,8 @@ public class Agent : MonoBehaviour
 
     public bool tryToMove()
     {
+        Unit[] currentUnits = FindObjectsOfType<Unit>();
+        Village[] villages = FindObjectsOfType<Village>();
         for (int i = 0; i < allyUnits.Count; i++)
         {
             Unit ally = allyUnits[i].GetComponent<Unit>();
@@ -137,8 +153,7 @@ public class Agent : MonoBehaviour
 
             foreach(Tile tile in tiles)
             {
-                forwardModel.MoveUnit(ally, tile, gameManager);
-                var score = forwardModel.HeuristicFunction();
+                var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
                 if (score > maxScore)
                 {
                     maxScore = score;
@@ -183,6 +198,10 @@ public class Agent : MonoBehaviour
     {
         float maxScore = 0f;
         int choosenIndex = 0;
+        Unit[] curretUnits = FindObjectsOfType<Unit>();
+        Village[] villages = FindObjectsOfType<Village>();
+
+
         for (int i = 0; i < tilesFather.childCount; i++)
         {
             if (tilesFather.GetChild(i).GetComponent<Tile>().isCreatable)
@@ -190,13 +209,11 @@ public class Agent : MonoBehaviour
                 var score = 0f;
                 if (gameManager.createdUnit != null)
                 {
-                    forwardModel.MoveUnit(gameManager.createdUnit, tilesFather.GetChild(i).GetComponent<Tile>(), gameManager);
-                    score = forwardModel.HeuristicFunction();
+                    score = forwardModel.MoveUnit(gameManager.createdUnit, tilesFather.GetChild(i).GetComponent<Tile>(), curretUnits, villages);
                 }
                 else if(gameManager.createdVillage != null)
                 {
-                    forwardModel.SetVillage(gameManager.createdVillage, tilesFather.GetChild(i).GetComponent<Tile>(), gameManager);
-                    score = forwardModel.HeuristicFunction();
+                    score = forwardModel.SetVillage(gameManager.createdVillage, tilesFather.GetChild(i).GetComponent<Tile>(), curretUnits, villages);
                 }
 
                 if(score > maxScore)
@@ -220,6 +237,8 @@ public class Agent : MonoBehaviour
         for (int i = 0; i < allyUnits.Count; i++)
         {
             Unit ally = allyUnits[i].GetComponent<Unit>();
+            Unit[] units = FindObjectsOfType<Unit>();
+            Village[] villages = FindObjectsOfType<Village>();
             ally.GetEnemies();
             if(!ally.hasAttacked && ally.enemiesInRange.Count > 0)
             {
@@ -228,8 +247,7 @@ public class Agent : MonoBehaviour
 
                 for(int j = 1; j < ally.enemiesInRange.Count; j++)
                 {
-                    forwardModel.Attack(ally, ally.enemiesInRange[j], gameManager);
-                    var score = forwardModel.HeuristicFunction();
+                    var score = forwardModel.Attack(ally, ally.enemiesInRange[j], units, villages);
                     if (score > maxScore)
                     {
                         maxScore = score;

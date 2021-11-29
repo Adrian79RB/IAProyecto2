@@ -1669,6 +1669,57 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &90478053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 90478055}
+  - component: {fileID: 90478054}
+  m_Layer: 0
+  m_Name: Agent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &90478054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90478053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41062897d21e6dc41a6754b0a658a02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1570414220}
+  characterCreation: {fileID: 1570414222}
+  maxActions: 10
+  knight: {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
+  archer: {fileID: 626269173632994743, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
+  dragon: {fileID: 3831706681586816672, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
+  village: {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  enemiesKilled: 0
+--- !u!4 &90478055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90478053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.48621, y: 1.2960161, z: -0.9121094}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &91830888
 GameObject:
   m_ObjectHideFlags: 0
@@ -9248,7 +9299,7 @@ RectTransform:
   m_Children:
   - {fileID: 1645472168}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -24402,7 +24453,7 @@ RectTransform:
   m_Children:
   - {fileID: 1181647337}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -26304,7 +26355,7 @@ Transform:
   - {fileID: 901529590}
   - {fileID: 1116768294}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1195686600
 PrefabInstance:
@@ -33902,6 +33953,7 @@ MonoBehaviour:
   createdVillage: {fileID: 0}
   blueVictory: {fileID: 243264726}
   darkVictory: {fileID: 1969939416}
+  agent: {fileID: 90478054}
 --- !u!4 &1570414221
 Transform:
   m_ObjectHideFlags: 0
@@ -42429,7 +42481,7 @@ Transform:
   - {fileID: 2123794295}
   - {fileID: 1347942440}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1750463337 stripped
 GameObject:
@@ -48171,7 +48223,7 @@ Transform:
   m_LocalScale: {x: 0.16062763, y: 0.16062763, z: 0.16062763}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1949891186
 PrefabInstance:

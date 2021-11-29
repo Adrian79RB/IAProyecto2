@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
+[Serializable]
 public class GM : MonoBehaviour
 {
     public Unit selectedUnit;
@@ -37,6 +39,8 @@ public class GM : MonoBehaviour
 
     public GameObject blueVictory;
     public GameObject darkVictory;
+
+    public Agent agent;
 
 	private AudioSource source;
 
@@ -120,7 +124,7 @@ public class GM : MonoBehaviour
         }
     }
 
-    void EndTurn() {
+    public void EndTurn() {
 		source.Play();
         camAnim.SetTrigger("shake");
 
@@ -143,6 +147,7 @@ public class GM : MonoBehaviour
         if (playerTurn == 1) {
             playerIcon.sprite = playerTwoIcon;
             playerTurn = 2;
+            agent.StartTurn();
         } else if (playerTurn == 2) {
             playerIcon.sprite = playerOneIcon;
             playerTurn = 1;

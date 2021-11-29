@@ -80,7 +80,7 @@ public abstract class Decorator : TaskCollection
     public abstract TaskCollection child { get; set; }
 }
 
-public class UntilFail : Decorator
+public class UntilFail_EndTurn : Decorator
 {
     private TaskCollection _child;
     public override TaskCollection child
@@ -104,7 +104,7 @@ public class UntilFail : Decorator
             if (_child.Run(agent) == TaskStates.FAILED)
                 break;
         }
-
+        agent.EndAgentTurn();
         return TaskStates.SUCCEEDED;
     }
 }

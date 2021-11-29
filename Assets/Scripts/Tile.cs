@@ -14,7 +14,6 @@ public class Tile : MonoBehaviour
     public bool isCreatable;
 
     private GM gm;
-    private Agent IAagent;
 
     public float amount;
     private bool sizeIncrease;
@@ -26,7 +25,6 @@ public class Tile : MonoBehaviour
 		source = GetComponent<AudioSource>();
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
-        IAagent = GameObject.Find("Agent").GetComponent<Agent>();
     }
 
     public bool isClear() // does this tile have an obstacle on it. Yes or No?
