@@ -147,7 +147,6 @@ public class GM : MonoBehaviour
         if (playerTurn == 1) {
             playerIcon.sprite = playerTwoIcon;
             playerTurn = 2;
-            agent.StartTurn();
         } else if (playerTurn == 2) {
             playerIcon.sprite = playerOneIcon;
             playerTurn = 1;

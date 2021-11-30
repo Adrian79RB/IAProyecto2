@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class Unit : MonoBehaviour
     public int tileSpeed;
     public float moveSpeed;
 
-    private GM gm;
+    public GM gm;
 
     public int attackRadius;
     public bool hasAttacked;
@@ -126,7 +127,7 @@ public class Unit : MonoBehaviour
         {
             gm.selectedUnit.isSelected = false;
         }
-        gm.ResetTiles();
+        //gm.ResetTiles();
         gm.selectedUnit = this;
 
         isSelected = true;
@@ -154,9 +155,10 @@ public class Unit : MonoBehaviour
                 if (tile.isClear() == true)
                 { // is the tile clear from any obstacles
                     tile.Highlight();
-                    walkableTiles.Add(tile);
+                    if(playerNumber == 2)
+                        walkableTiles.Add(tile);
                 }
-            }          
+            }
         }
     }
 
@@ -173,7 +175,6 @@ public class Unit : MonoBehaviour
                     enemiesInRange.Add(enemy);
                     enemy.weaponIcon.SetActive(true);
                 }
-
             }
         }
     }

@@ -20,7 +20,7 @@ public class BehaviourTree
 
     TaskCollection rootTask;
     List<nodeTask> treeConstructor;
-    int maxChildren = 11;
+    int maxChildren = 17;
 
 
     public BehaviourTree()
@@ -32,8 +32,8 @@ public class BehaviourTree
 
 
         //Primer hijo del nodo raíz
-        currentTask = new nodeTask(new Sequence(), rootTask);
-        treeConstructor[0] = currentTask;
+        currentTask = new nodeTask(new Selector(), rootTask);
+        treeConstructor.Add(currentTask);
 
         for (int i = 1; i < maxChildren; i++)
         {
@@ -45,7 +45,7 @@ public class BehaviourTree
                 case 3:
                     currentTask = new nodeTask(new GoShopping(), treeConstructor[1].task); break;
                 case 4:
-                    currentTask = new nodeTask(new Selector(), treeConstructor[0].task); break;
+                    currentTask = new nodeTask(new Selector(), treeConstructor[1].task); break;
                 case 5:
                     currentTask = new nodeTask(new Sequence(), currentTask.task); break;
                 case 6:
@@ -58,6 +58,20 @@ public class BehaviourTree
                     currentTask = new nodeTask(new Move(), currentTask.task); break;
                 case 10:
                     currentTask = new nodeTask(new Attack(), treeConstructor[8].task); break;
+                case 11:
+                    currentTask = new nodeTask(new Selector(), treeConstructor[0].task); break;
+                case 12:
+                    currentTask = new nodeTask(new Sequence(), currentTask.task); break;
+                case 13:
+                    currentTask = new nodeTask(new AttackCondition(), currentTask.task); break;
+                case 14:
+                    currentTask = new nodeTask(new Attack(), treeConstructor[12].task); break;
+                case 15:
+                    currentTask = new nodeTask(new Sequence(), treeConstructor[11].task); break;
+                case 16:
+                    currentTask = new nodeTask(new Move(), currentTask.task); break;
+                case 17:
+                    currentTask = new nodeTask(new Attack(), treeConstructor[15].task); break;
             }
 
             treeConstructor.Add(currentTask);

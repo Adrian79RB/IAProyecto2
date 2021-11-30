@@ -7,12 +7,11 @@ using System.IO;
 
 public class ForwardModel
 {
-    public GM gameStateInstance;
-    public List<Tile> currentTilesState;
-    public List<Unit> currentUnitsState;
+    public Tile[] currentTilesState;
+    public Unit[] currentUnitsState;
     public int enemiesKilled;
 
-    public ForwardModel(List<Tile> initalTileState, List<Unit> initialUnitState)
+    public ForwardModel(Tile[] initalTileState, Unit[] initialUnitState)
     {
         currentTilesState = initalTileState;
         currentUnitsState = initialUnitState;
@@ -20,36 +19,49 @@ public class ForwardModel
 
     public float MoveUnit(Unit unit, Tile tile, Unit[] units, Village[] villages)
     {
-        Unit unitCopied = (Unit)MakeCopy(unit);
+        GameObject unitCopied = GameObject.Instantiate(unit.gameObject);
 
         while (unitCopied.transform.position.x != tile.transform.position.x)
         {
-            unitCopied.transform.position = Vector2.MoveTowards(unitCopied.transform.position, new Vector2(tile.transform.position.x, unitCopied.transform.position.y), unitCopied.moveSpeed * Time.deltaTime);
+            unitCopied.transform.position = Vector2.MoveTowards(unitCopied.transform.position, new Vector2(tile.transform.position.x, unitCopied.transform.position.y), unitCopied.GetComponent<Unit>().moveSpeed * Time.deltaTime);
         }
         while (unitCopied.transform.position.y != tile.transform.position.y)
         {
-            unitCopied.transform.position = Vector2.MoveTowards(unitCopied.transform.position, new Vector2(unitCopied.transform.position.x, tile.transform.position.y), unitCopied.moveSpeed * Time.deltaTime);
+            unitCopied.transform.position = Vector2.MoveTowards(unitCopied.transform.position, new Vector2(unitCopied.transform.position.x, tile.transform.position.y), unitCopied.GetComponent<Unit>().moveSpeed * Time.deltaTime);
         }
 
-        unitCopied.hasMoved = true;
-        unitCopied.ResetWeaponIcon();
-        unitCopied.GetEnemies();
+        unitCopied.GetComponent<Unit>().hasMoved = true;
+        unitCopied.GetComponent<Unit>().ResetWeaponIcon();
+        unitCopied.GetComponent<Unit>().GetEnemies();
 
         for (int i = 0; i < units.Length; i++)
         {
             if(units[i] == unit)
             {
-                units[i] = unitCopied;
+                units[i] = unitCopied.GetComponent<Unit>();
                 break;
             }
         }
 
-        return HeuristicFunction(units, villages);
+        var finalScore = HeuristicFunction(units, villages);
+
+        for (int i = 0; i < units.Length; i++)
+        {
+            if (units[i] == unit)
+            {
+                units[i] = unitCopied.GetComponent<Unit>();
+                break;
+            }
+        }
+        unitCopied.GetComponent<Unit>().ResetWeaponIcon();
+        GameObject.Destroy(unitCopied);
+
+        return finalScore;
     }
 
     public float SetVillage(Village village, Tile tile, Unit[] units, Village[] villages)
     {
-        Village villageCopied = (Village)MakeCopy(village);
+        GameObject villageCopied = GameObject.Instantiate(village.gameObject);
 
         villageCopied.transform.position = tile.transform.position;
 
@@ -57,25 +69,37 @@ public class ForwardModel
         {
             if(villages[i] == village)
             {
-                villages[i] = villageCopied;
+                villages[i] = villageCopied.GetComponent<Village>();
                 break;
             }
         }
 
-        return HeuristicFunction(units, villages);
+        var finalScore = HeuristicFunction(units, villages);
+
+        for (int i = 0; i < villages.Length; i++)
+        {
+            if (villages[i] == villageCopied.GetComponent<Village>())
+            {
+                villages[i] = village;
+                break;
+            }
+        }
+        GameObject.Destroy(villageCopied);
+
+        return finalScore;
     }
 
     public float Attack (Unit allyUnit, Unit enemyUnit, Unit[] units, Village[] villages)
     {
-        Unit copiedEnemy = (Unit)MakeCopy(enemyUnit);
-        Unit copiedAlly = (Unit)MakeCopy(allyUnit);
+        GameObject copiedEnemy = GameObject.Instantiate(enemyUnit.gameObject);
+        GameObject copiedAlly = GameObject.Instantiate(allyUnit.gameObject);
 
-        int enemyDamege = copiedAlly.attackDamage - copiedEnemy.armor;
-        int unitDamage = copiedEnemy.defenseDamage - copiedAlly.armor;
+        int enemyDamege = copiedAlly.GetComponent<Unit>().attackDamage - copiedEnemy.GetComponent<Unit>().armor;
+        int unitDamage = copiedEnemy.GetComponent<Unit>().defenseDamage - copiedAlly.GetComponent<Unit>().armor;
 
         if (enemyDamege >= 1)
         {
-            copiedEnemy.health -= enemyDamege;
+            copiedEnemy.GetComponent<Unit>().health -= enemyDamege;
         }
 
         if (copiedAlly.tag == "Archer" && enemyUnit.tag != "Archer")
@@ -84,7 +108,7 @@ public class ForwardModel
             {
                 if (unitDamage >= 1)
                 {
-                    copiedAlly.health -= unitDamage;
+                    copiedAlly.GetComponent<Unit>().health -= unitDamage;
                 }
             }
         }
@@ -92,7 +116,7 @@ public class ForwardModel
         {
             if (unitDamage >= 1)
             {
-                copiedAlly.health -= unitDamage;
+                copiedAlly.GetComponent<Unit>().health -= unitDamage;
             }
         }
 
@@ -101,14 +125,27 @@ public class ForwardModel
         for (int i = 0; i < units.Length; i++)
         {
             if (units[i] == allyUnit)
-                units[i] = copiedAlly;
+                units[i] = copiedAlly.GetComponent<Unit>();
             if (units[i] == enemyUnit)
-                units[i] = enemyUnit;
+                units[i] = copiedEnemy.GetComponent<Unit>();
         }
 
         //TODO: Falta cambiar los edificios
 
-        return HeuristicFunction(units, villages);
+        var finalScore = HeuristicFunction(units, villages);
+
+        for (int i = 0; i < units.Length; i++)
+        {
+            if (units[i] == copiedAlly.GetComponent<Unit>())
+                units[i] = allyUnit;
+            if (units[i] == copiedEnemy.GetComponent<Unit>())
+                units[i] = enemyUnit;
+        }
+
+        GameObject.Destroy(copiedAlly);
+        GameObject.Destroy(copiedEnemy);
+
+        return finalScore;
 
     }
 
@@ -157,10 +194,18 @@ public class ForwardModel
             if (units[i].name.Contains("Blue"))
             {
                 allyUnits.Add(units[i]);
-                allyHealth += units[i].health;
+                if (units[i].name.Contains("King"))
+                    allyHealth += units[i].health * 1.75f;
+                else
+                    allyHealth += units[i].health;
             }
             else
-                enemyHealth += units[i].health;
+            {
+                if (units[i].name.Contains("King"))
+                    enemyHealth += units[i].health * 1.75f;
+                else
+                    enemyHealth += units[i].health * 1.2f;
+            }
         }
 
         /*for (int i = 0; i < villages.Length; i++)
@@ -192,16 +237,6 @@ public class ForwardModel
             }*/
         }
 
-
         return allyHealth - enemyHealth + nearEnemies + 2 * enemiesKilled;    
-    }
-
-    public object MakeCopy(object objetoCopiable)
-    {
-        var bFormatter = new BinaryFormatter();
-        var memStream = new MemoryStream();
-        bFormatter.Serialize(memStream, objetoCopiable);
-        memStream.Position = 0;
-        return bFormatter.Deserialize(memStream);
     }
 }

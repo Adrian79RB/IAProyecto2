@@ -26,43 +26,50 @@ public class Agent : MonoBehaviour
     List<GameObject> allyUnits;
     
     int enemiesCount;
-    Transform units;
-
-    // Enemy King
-    GameObject enemyKing;
 
     // Start is called before the first frame update
     void Start()
     {
         tree = new BehaviourTree();
+
         gameManager = FindObjectOfType<GM>();
         tilesFather = GameObject.Find("Tiles").transform;
 
-        enemyKing = GameObject.Find("Dark King");
         enemiesCount = 0;
-        units = GameObject.Find("Units").transform;
+        Unit[] units = FindObjectsOfType<Unit>();
         allyUnits = new List<GameObject>();
 
-        for (int i = 0; i < units.childCount; i++)
+        for (int i = 0; i < units.Length; i++)
         {
-            if (units.GetChild(i).name.Contains("Blue"))
-                allyUnits.Add(units.GetChild(i).gameObject);
+            if (units[i].name.Contains("Blue"))
+                allyUnits.Add(units[i].gameObject);
             else
                 enemiesCount++;
         }
 
         enemiesKilled = 0;
+
+        Tile[] tileState = FindObjectsOfType<Tile>();
+        Unit[] unitState = FindObjectsOfType<Unit>();
+        forwardModel = new ForwardModel(tileState, unitState);
+    }
+
+    private void Update()
+    {
+        if (gameManager.playerTurn == 2)
+            StartTurn();
     }
 
     public void StartTurn()
     {
         allyUnits = new List<GameObject>();
         enemiesCount = 0;
+        Unit[] units = FindObjectsOfType<Unit>();
 
-        for (int i = 0; i < units.childCount; i++)
+        for (int i = 0; i < units.Length; i++)
         {
-            if (units.GetChild(i).name.Contains("Blue"))
-                allyUnits.Add(units.GetChild(i).gameObject);
+            if (units[i].name.Contains("Blue"))
+                allyUnits.Add(units[i].gameObject);
             else
                 enemiesCount++;
         }
@@ -86,7 +93,7 @@ public class Agent : MonoBehaviour
 
     public bool tryToShop()
     {
-        if (forwardModel.gameStateInstance.player2Gold > 40 && UnityEngine.Random.value > 0.2)
+        if (gameManager.player2Gold > 40 && UnityEngine.Random.value > 0.2)
         {
             Unit[] units = FindObjectsOfType<Unit>();
             Village[] villages = FindObjectsOfType<Village>();
@@ -94,35 +101,48 @@ public class Agent : MonoBehaviour
             int[,] unitsBought = new int[maxActions, 4];
             for (int i = 0; i < maxActions; i++)
             {
-                int maxTries = Mathf.RoundToInt(forwardModel.gameStateInstance.player2Gold / 40);
-                int j = 0;
+                float currentGold = gameManager.player2Gold;
                 float score = 0f;
 
-                while (j < maxTries && forwardModel.gameStateInstance.player2Gold >= 40)
+                while (currentGold >= knight.GetComponent<Unit>().cost)
                 {
                     float randomChoose = UnityEngine.Random.value;
                     if (randomChoose < 0.2)
                     {
-                        score += forwardModel.CreateUnit(knight.GetComponent<Unit>(), units, villages);
-                        unitsBought[j, 0]++;
+                        if (currentGold > knight.GetComponent<Unit>().cost)
+                        {
+                            score += forwardModel.CreateUnit(knight.GetComponent<Unit>(), units, villages);
+                            unitsBought[i, 0]++;
+                        }
+                        currentGold -= knight.GetComponent<Unit>().cost;
                     }
                     else if (randomChoose < 0.4)
                     {
-                        score += forwardModel.CreateUnit(archer.GetComponent<Unit>(), units, villages);
-                        unitsBought[j, 1]++;
+                        if (currentGold > archer.GetComponent<Unit>().cost)
+                        {
+                            score += forwardModel.CreateUnit(archer.GetComponent<Unit>(), units, villages);
+                            unitsBought[i, 1]++;
+                        }
+                        currentGold -= archer.GetComponent<Unit>().cost;
                     }
                     else if (randomChoose < 0.6)
                     {
-                        score += forwardModel.CreateUnit(dragon.GetComponent<Unit>(), units, villages);
-                        unitsBought[j, 2]++;
+                        if (currentGold > dragon.GetComponent<Unit>().cost)
+                        {
+                            score += forwardModel.CreateUnit(dragon.GetComponent<Unit>(), units, villages);
+                            unitsBought[i, 2]++;
+                        }
+                        currentGold -= dragon.GetComponent<Unit>().cost;
                     }
                     else if (randomChoose < 0.8)
                     {
-                        score += forwardModel.CreateVillage(village.GetComponent<Village>(), units, villages);
-                        unitsBought[j, 3]++;
+                        if (currentGold > village.GetComponent<Village>().cost)
+                        {
+                            score += forwardModel.CreateVillage(village.GetComponent<Village>(), units, villages);
+                            unitsBought[i, 3]++;
+                        }
+                        currentGold -= village.GetComponent<Village>().cost;
                     }
-
-                    j++;
                 }
                 scores[i] = score;
             }
@@ -144,15 +164,19 @@ public class Agent : MonoBehaviour
     {
         Unit[] currentUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
+
+        //StartCoroutine(movingUnits(currentUnits, villages));
         for (int i = 0; i < allyUnits.Count; i++)
         {
             Unit ally = allyUnits[i].GetComponent<Unit>();
             var tiles = ally.GetTilesArray();
             float maxScore = 0f;
             Tile targetTile = null;
+            Debug.Log("Unidad buscando casilla: " + ally.transform.name);
 
-            foreach(Tile tile in tiles)
+            foreach (Tile tile in tiles)
             {
+                Debug.Log("Tile: " + tile.transform.position + "; State: " + tile.isClear());
                 var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
                 if (score > maxScore)
                 {
@@ -161,28 +185,70 @@ public class Agent : MonoBehaviour
                 }
             }
 
-            ally.Move(targetTile.transform);
+            if (targetTile)
+            {
+                Debug.Log("Tile Final: " + targetTile.transform.position + "; state: " + targetTile.isClear());
+                ally.Move(targetTile.transform);
+                ally.ResetWeaponIcon();
+            }
         }
 
         return true;
+    }
+
+    IEnumerator movingUnits(Unit[] currentUnits, Village[] villages)
+    {
+        for (int i = 0; i < allyUnits.Count; i++)
+        {
+            Unit ally = allyUnits[i].GetComponent<Unit>();
+            var tiles = ally.GetTilesArray();
+            float maxScore = 0f;
+            Tile targetTile = null;
+            Debug.Log("Unidad buscando casilla: " + ally.transform.name);
+
+            foreach (Tile tile in tiles)
+            {
+                Debug.Log("Tile: " + tile.transform.position + "; State: " + tile.isClear());
+                var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
+                if (score > maxScore)
+                {
+                    maxScore = score;
+                    targetTile = tile;
+                }
+            }
+
+            if (targetTile)
+            {
+                Debug.Log("Tile Final: " + targetTile.transform.position + "; state: " + targetTile.isClear());
+                ally.Move(targetTile.transform);
+                ally.ResetWeaponIcon();
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     private void BuyNewUnit(int scoreIndex, int[,] unitsBought)
     {
         for (int i = 0; i < unitsBought[scoreIndex, 0]; i++)
         {
+            if (!knight.GetComponent<Unit>().gm)
+                knight.GetComponent<Unit>().gm = gameManager;
             characterCreation.BuyUnit(knight.GetComponent<Unit>());
             chooseCharacterCreationTile();
         }
 
         for (int i = 0; i < unitsBought[scoreIndex, 1]; i++)
         {
+            if (!archer.GetComponent<Unit>().gm)
+                archer.GetComponent<Unit>().gm = gameManager;
             characterCreation.BuyUnit(archer.GetComponent<Unit>());
             chooseCharacterCreationTile();
         }
 
         for (int i = 0; i < unitsBought[scoreIndex, 2]; i++)
         {
+            if (!dragon.GetComponent<Unit>().gm)
+                dragon.GetComponent<Unit>().gm = gameManager;
             characterCreation.BuyUnit(dragon.GetComponent<Unit>());
             chooseCharacterCreationTile();
         }
@@ -200,11 +266,11 @@ public class Agent : MonoBehaviour
         int choosenIndex = 0;
         Unit[] curretUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
-
+        Debug.Log("Elegimos la tesela de creación");
 
         for (int i = 0; i < tilesFather.childCount; i++)
         {
-            if (tilesFather.GetChild(i).GetComponent<Tile>().isCreatable)
+            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear())
             {
                 var score = 0f;
                 if (gameManager.createdUnit != null)

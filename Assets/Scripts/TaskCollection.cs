@@ -16,23 +16,11 @@ public abstract class TaskCollection
 {
     public int state = TaskStates.FRESH;
 
-    public List<TaskCollection> children
-    {
-        get
-        {
-            return children;
-        }
+    public List<TaskCollection> children;
 
-        set
-        {
-            children = value;
-        }
-    }
-
-    public void setChildren(List<TaskCollection> newChildren) 
+    public TaskCollection()
     {
-        foreach (var child in newChildren)
-            children.Add(child);
+        children = new List<TaskCollection>();
     }
 
     public abstract int Run(Agent agent);
@@ -43,6 +31,7 @@ public class Selector : TaskCollection
     public override int Run(Agent agent)
     {
         state = TaskStates.RUNNING;
+
         for (int i = 0; i < children.Count; i++)
         {
             if (children[i].Run(agent) == TaskStates.SUCCEEDED)
@@ -77,31 +66,18 @@ public class Sequence : TaskCollection
 
 public abstract class Decorator : TaskCollection
 {
-    public abstract TaskCollection child { get; set; }
+    public TaskCollection child;
 }
 
 public class UntilFail_EndTurn : Decorator
 {
-    private TaskCollection _child;
-    public override TaskCollection child
-    {
-        get
-        {
-            return _child;
-        }
-
-        set
-        {
-            _child = value;
-        }
-    }
-
     public override int Run(Agent agent)
     {
+        child = children[0];
         state = TaskStates.RUNNING;
         while (true)
         {
-            if (_child.Run(agent) == TaskStates.FAILED)
+            if (child.Run(agent) == TaskStates.FAILED)
                 break;
         }
         agent.EndAgentTurn();
@@ -114,7 +90,8 @@ public class ShopCondition : TaskCollection
     public override int Run(Agent agent)
     {
         state = TaskStates.RUNNING;
-        if(agent.gameManager.player2Gold >= 40)
+
+        if (agent.gameManager.player2Gold >= 40)
         {
             state = TaskStates.SUCCEEDED;
         }
