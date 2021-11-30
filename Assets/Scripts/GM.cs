@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
+[Serializable]
 public class GM : MonoBehaviour
 {
     public Unit selectedUnit;
@@ -38,6 +40,8 @@ public class GM : MonoBehaviour
     public GameObject blueVictory;
     public GameObject darkVictory;
 
+    public Agent agent;
+
 	private AudioSource source;
 
     private void Start()
@@ -45,6 +49,14 @@ public class GM : MonoBehaviour
 		source = GetComponent<AudioSource>();
         camAnim = Camera.main.GetComponent<Animator>();
         GetGoldIncome(1);
+
+        Tile[] tiles = FindObjectsOfType<Tile>();
+        foreach( var tile in tiles)
+        {
+            if (!tile.isClear())
+                tile.isSelected = true;
+        }
+        
     }
 
     private void Update()
@@ -120,7 +132,7 @@ public class GM : MonoBehaviour
         }
     }
 
-    void EndTurn() {
+    public void EndTurn() {
 		source.Play();
         camAnim.SetTrigger("shake");
 

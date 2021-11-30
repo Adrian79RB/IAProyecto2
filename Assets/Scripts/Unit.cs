@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,8 @@ public class Unit : MonoBehaviour
     public int tileSpeed;
     public float moveSpeed;
 
-    private GM gm;
+    public GM gm;
+
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
@@ -36,7 +38,10 @@ public class Unit : MonoBehaviour
 
     public bool isKing;
 
+    public Tile lastTile;
+
 	private AudioSource source;
+    private List<Tile> walkableTiles;
 
     public Text displayedText; 
 
@@ -70,7 +75,7 @@ public class Unit : MonoBehaviour
 
         }
         else {
-            if (playerNumber == gm.playerTurn) { // select unit only if it's his turn
+            if (playerNumber == 1) { // select unit only if it's his turn
                 if (gm.selectedUnit != null)
                 { // deselect the unit that is currently selected, so there's only one isSelected unit at a time
                     gm.selectedUnit.isSelected = false;
@@ -109,12 +114,35 @@ public class Unit : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && playerNumber == 1)
         {
             gm.UpdateInfoPanel(this);
         }
     }
 
+
+    public List<Tile> GetTilesArray()
+    {
+        ResetWeaponIcon();
+
+        if (gm.selectedUnit != null)
+        {
+            gm.selectedUnit.isSelected = false;
+        }
+        //gm.ResetTiles();
+        gm.selectedUnit = this;
+
+        isSelected = true;
+        if (source != null)
+        {
+            source.Play();
+        }
+
+        walkableTiles = new List<Tile>();
+        GetWalkableTiles();
+        GetEnemies();
+        return walkableTiles;
+    }
 
 
     void GetWalkableTiles() { // Looks for the tiles the unit can walk on
@@ -129,13 +157,14 @@ public class Unit : MonoBehaviour
                 if (tile.isClear() == true)
                 { // is the tile clear from any obstacles
                     tile.Highlight();
+                    if(playerNumber == 2)
+                        walkableTiles.Add(tile);
                 }
-
-            }          
+            }
         }
     }
 
-    void GetEnemies() {
+    public void GetEnemies() {
     
         enemiesInRange.Clear();
 
@@ -148,7 +177,6 @@ public class Unit : MonoBehaviour
                     enemiesInRange.Add(enemy);
                     enemy.weaponIcon.SetActive(true);
                 }
-
             }
         }
     }
@@ -159,7 +187,7 @@ public class Unit : MonoBehaviour
         StartCoroutine(StartMovement(movePos));
     }
 
-    void Attack(Unit enemy) {
+    public void Attack(Unit enemy) {
         hasAttacked = true;
         int enemyDamege = attackDamage - enemy.armor;
         int unitDamage = enemy.defenseDamage - armor;
@@ -220,7 +248,11 @@ public class Unit : MonoBehaviour
 
         if (enemy.health <= 0)
         {
-         
+            if(gm.playerTurn == 2)
+            {
+                gm.agent.enemiesKilled++;
+            }
+
             if (deathEffect != null){
 				Instantiate(deathEffect, enemy.transform.position, Quaternion.identity);
 				camAnim.SetTrigger("shake");
@@ -286,8 +318,4 @@ public class Unit : MonoBehaviour
         GetEnemies();
         gm.MoveInfoPanel(this);
     }
-
-
-
-
 }

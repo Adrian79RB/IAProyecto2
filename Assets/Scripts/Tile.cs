@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
 
     public bool isWalkable;
     public bool isCreatable;
+    public bool isSelected;
 
     private GM gm;
 
@@ -25,7 +26,6 @@ public class Tile : MonoBehaviour
 		source = GetComponent<AudioSource>();
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
-
     }
 
     public bool isClear() // does this tile have an obstacle on it. Yes or No?
@@ -36,6 +36,8 @@ public class Tile : MonoBehaviour
             return true;
         }
         else {
+            if(col.GetComponent<Unit>())
+                col.GetComponent<Unit>().lastTile = this;
             return false;
         }
     }
