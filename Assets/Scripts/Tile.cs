@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
 
     public bool isWalkable;
     public bool isCreatable;
+    public bool isSelected;
 
     private GM gm;
 
@@ -35,6 +36,8 @@ public class Tile : MonoBehaviour
             return true;
         }
         else {
+            if(col.GetComponent<Unit>())
+                col.GetComponent<Unit>().lastTile = this;
             return false;
         }
     }

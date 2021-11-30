@@ -38,6 +38,8 @@ public class Unit : MonoBehaviour
 
     public bool isKing;
 
+    public Tile lastTile;
+
 	private AudioSource source;
     private List<Tile> walkableTiles;
 

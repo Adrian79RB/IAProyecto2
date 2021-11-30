@@ -165,7 +165,6 @@ public class Agent : MonoBehaviour
         Unit[] currentUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
 
-        //StartCoroutine(movingUnits(currentUnits, villages));
         for (int i = 0; i < allyUnits.Count; i++)
         {
             Unit ally = allyUnits[i].GetComponent<Unit>();
@@ -176,12 +175,14 @@ public class Agent : MonoBehaviour
 
             foreach (Tile tile in tiles)
             {
-                Debug.Log("Tile: " + tile.transform.position + "; State: " + tile.isClear());
-                var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
-                if (score > maxScore)
+                if (!tile.isSelected)
                 {
-                    maxScore = score;
-                    targetTile = tile;
+                    var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
+                    if (score > maxScore)
+                    {
+                        maxScore = score;
+                        targetTile = tile;
+                    }
                 }
             }
 
@@ -189,42 +190,14 @@ public class Agent : MonoBehaviour
             {
                 Debug.Log("Tile Final: " + targetTile.transform.position + "; state: " + targetTile.isClear());
                 ally.Move(targetTile.transform);
+                targetTile.isSelected = true;
+                ally.lastTile.isSelected = false;
+                ally.lastTile = targetTile;
                 ally.ResetWeaponIcon();
             }
         }
 
         return true;
-    }
-
-    IEnumerator movingUnits(Unit[] currentUnits, Village[] villages)
-    {
-        for (int i = 0; i < allyUnits.Count; i++)
-        {
-            Unit ally = allyUnits[i].GetComponent<Unit>();
-            var tiles = ally.GetTilesArray();
-            float maxScore = 0f;
-            Tile targetTile = null;
-            Debug.Log("Unidad buscando casilla: " + ally.transform.name);
-
-            foreach (Tile tile in tiles)
-            {
-                Debug.Log("Tile: " + tile.transform.position + "; State: " + tile.isClear());
-                var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
-                if (score > maxScore)
-                {
-                    maxScore = score;
-                    targetTile = tile;
-                }
-            }
-
-            if (targetTile)
-            {
-                Debug.Log("Tile Final: " + targetTile.transform.position + "; state: " + targetTile.isClear());
-                ally.Move(targetTile.transform);
-                ally.ResetWeaponIcon();
-            }
-            yield return new WaitForSeconds(0.2f);
-        }
     }
 
     private void BuyNewUnit(int scoreIndex, int[,] unitsBought)
@@ -270,7 +243,7 @@ public class Agent : MonoBehaviour
 
         for (int i = 0; i < tilesFather.childCount; i++)
         {
-            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear())
+            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear() && !tilesFather.GetChild(i).GetComponent<Tile>().isSelected)
             {
                 var score = 0f;
                 if (gameManager.createdUnit != null)
