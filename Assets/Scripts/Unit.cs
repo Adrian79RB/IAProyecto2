@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     public int attackRadius;
     public bool hasAttacked;
     public List<Unit> enemiesInRange = new List<Unit>();
+    public List<Village> enemyVillages = new List<Village>();
 
     public int playerNumber;
 
@@ -90,7 +91,13 @@ public class Unit : MonoBehaviour
 				}
 				
                 GetWalkableTiles();
-                GetEnemies();
+                if(transform.tag == "Siege"){
+                    GetVillages();
+                }
+                else{
+                    GetEnemies();
+                }
+                
             }
 
         }
@@ -181,6 +188,23 @@ public class Unit : MonoBehaviour
         }
     }
 
+    void GetVillages(){
+        Debug.Log("He entrado");
+        enemyVillages.Clear();
+
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach (Village village in villages){
+            Debug.Log("ForEach");
+            if(Mathf.Abs(transform.position.x - village.transform.position.x)+Mathf.Abs(transform.position.y - village.transform.position.y)<= attackRadius){
+                if(village.playerNumber != gm.playerTurn && !hasAttacked){
+                    Debug.Log("IF");
+                    enemyVillages.Add(village);
+                    village.weaponIcon.SetActive(true);
+                }
+            }
+        }
+    }
+
     public void Move(Transform movePos)
     {
         gm.ResetTiles();
@@ -191,7 +215,6 @@ public class Unit : MonoBehaviour
         hasAttacked = true;
         int enemyDamege = attackDamage - enemy.armor;
         int unitDamage = enemy.defenseDamage - armor;
-        int modifier =0;
         if(transform.tag == "Archer"){
             if(enemy.tag == "Knight"){
                 enemyDamege = enemyDamege - enemy.armor;
@@ -291,12 +314,32 @@ public class Unit : MonoBehaviour
   
 
     }
+    void AttackVillage(Village village){
+        hasAttacked = true;
+        int damage = attackDamage;
+        DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
+        d.Setup(damage);
+
+        if(village.health <= 0){
+            if (deathEffect != null){
+				Instantiate(deathEffect, village.transform.position, Quaternion.identity);
+				camAnim.SetTrigger("shake");
+			}
+            GetWalkableTiles();
+            gm.RemoveInfoPanel(village);
+            Destroy(village.gameObject);
+        }
+    }
 
     public void ResetWeaponIcon() {
         Unit[] enemies = FindObjectsOfType<Unit>();
         foreach (Unit enemy in enemies)
         {
             enemy.weaponIcon.SetActive(false);
+        }
+        Village[] villages = FindObjectsOfType<Village>();
+        foreach(Village village in villages){
+            village.weaponIcon.SetActive(false);
         }
     }
 
@@ -316,6 +359,7 @@ public class Unit : MonoBehaviour
         hasMoved = true;
         ResetWeaponIcon();
         GetEnemies();
+        GetVillages();
         gm.MoveInfoPanel(this);
     }
 }
