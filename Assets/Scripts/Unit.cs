@@ -187,7 +187,6 @@ public class Unit : MonoBehaviour
         hasAttacked = true;
         int enemyDamege = attackDamage - enemy.armor;
         int unitDamage = enemy.defenseDamage - armor;
-        int modifier =0;
         if(transform.tag == "Archer"){
             if(enemy.tag == "Knight"){
                 enemyDamege = enemyDamege - enemy.armor;
@@ -282,6 +281,22 @@ public class Unit : MonoBehaviour
         gm.UpdateInfoStats();
   
 
+    }
+    void AttackVillage(Village village){
+        hasAttacked = true;
+        int damage = attackDamage;
+        DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
+        d.Setup(damage);
+
+        if(village.health <= 0){
+            if (deathEffect != null){
+				Instantiate(deathEffect, village.transform.position, Quaternion.identity);
+				camAnim.SetTrigger("shake");
+			}
+            GetWalkableTiles();
+            gm.RemoveInfoPanel(village);
+            Destroy(village.gameObject);
+        }
     }
 
     public void ResetWeaponIcon() {

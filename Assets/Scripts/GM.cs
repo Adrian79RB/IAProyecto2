@@ -142,6 +142,14 @@ public class GM : MonoBehaviour
         }
     }
 
+     public void RemoveInfoPanel(Village village) {
+        if (village.Equals(currentInfoVillage))
+        {
+            unitInfoPanel.SetActive(false);
+			currentInfoVillage = null;
+        }
+    }
+
     public void ResetTiles() {
         Tile[] tiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in tiles)
