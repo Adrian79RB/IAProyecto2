@@ -168,31 +168,27 @@ public class Agent : MonoBehaviour
         for (int i = 0; i < allyUnits.Count; i++)
         {
             Unit ally = allyUnits[i].GetComponent<Unit>();
-            var tiles = ally.GetTilesArray();
-            float maxScore = 0f;
+            List<Tile> tiles = ally.GetTilesArray();
+            float maxScore = -Mathf.Infinity; // esto se puede convertir en lista y hacer la elección aleatoria
             Tile targetTile = null;
-            Debug.Log("Unidad buscando casilla: " + ally.transform.name);
 
             foreach (Tile tile in tiles)
             {
-                if (!tile.isSelected)
+                var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
+                if (score > maxScore)
                 {
-                    var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
-                    if (score > maxScore)
-                    {
-                        maxScore = score;
-                        targetTile = tile;
-                    }
+                    maxScore = score;
+                    targetTile = tile;
                 }
             }
 
             if (targetTile)
             {
-                Debug.Log("Tile Final: " + targetTile.transform.position + "; state: " + targetTile.isClear());
-                ally.Move(targetTile.transform);
-                targetTile.isSelected = true;
-                ally.lastTile.isSelected = false;
-                ally.lastTile = targetTile;
+                ally.lastTile.SetSelected(false);
+                targetTile.GetComponent<Tile>().SetSelected(true);
+                ally.lastTile = targetTile.GetComponent<Tile>();
+
+                ally.Move(targetTile.transform, i);
                 ally.ResetWeaponIcon();
             }
         }
@@ -239,11 +235,10 @@ public class Agent : MonoBehaviour
         int choosenIndex = 0;
         Unit[] curretUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
-        Debug.Log("Elegimos la tesela de creación");
 
         for (int i = 0; i < tilesFather.childCount; i++)
         {
-            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear() && !tilesFather.GetChild(i).GetComponent<Tile>().isSelected)
+            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear() && !tilesFather.GetChild(i).GetComponent<Tile>().GetSelected())
             {
                 var score = 0f;
                 if (gameManager.createdUnit != null)
@@ -267,6 +262,8 @@ public class Agent : MonoBehaviour
         unit.hasMoved = true;
         unit.hasAttacked = true;
         allyUnits.Add(unit.gameObject);
+        unit.lastTile = tilesFather.GetChild(choosenIndex).GetComponent<Tile>();
+        unit.lastTile.SetSelected(true);
         gameManager.ResetTiles();
         gameManager.createdUnit = null;
     }

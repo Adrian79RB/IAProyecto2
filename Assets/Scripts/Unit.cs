@@ -43,6 +43,7 @@ public class Unit : MonoBehaviour
 
 	private AudioSource source;
     private List<Tile> walkableTiles;
+    private Tile[] tiles;
 
     public Text displayedText; 
 
@@ -50,6 +51,7 @@ public class Unit : MonoBehaviour
     {
 		source = GetComponent<AudioSource>();
 		camAnim = Camera.main.GetComponent<Animator>();
+        tiles = FindObjectsOfType<Tile>();
         gm = FindObjectOfType<GM>();
         UpdateHealthDisplay();
     }
@@ -157,11 +159,10 @@ public class Unit : MonoBehaviour
             return;
         }
 
-        Tile[] tiles = FindObjectsOfType<Tile>();
         foreach (Tile tile in tiles) {
             if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
             { // how far he can move
-                if (tile.isClear() == true)
+                if (tile.isClear() && !tile.GetSelected())
                 { // is the tile clear from any obstacles
                     tile.Highlight();
                     if(playerNumber == 2)
@@ -189,15 +190,12 @@ public class Unit : MonoBehaviour
     }
 
     void GetVillages(){
-        Debug.Log("He entrado");
         enemyVillages.Clear();
 
         Village[] villages = FindObjectsOfType<Village>();
         foreach (Village village in villages){
-            Debug.Log("ForEach");
             if(Mathf.Abs(transform.position.x - village.transform.position.x)+Mathf.Abs(transform.position.y - village.transform.position.y)<= attackRadius){
                 if(village.playerNumber != gm.playerTurn && !hasAttacked){
-                    Debug.Log("IF");
                     enemyVillages.Add(village);
                     village.weaponIcon.SetActive(true);
                 }
@@ -205,10 +203,10 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public void Move(Transform movePos)
+    public void Move(Transform movePos, int unitIndex)
     {
         gm.ResetTiles();
-        StartCoroutine(StartMovement(movePos));
+        StartCoroutine(StartMovement(movePos, unitIndex));
     }
 
     public void Attack(Unit enemy) {
@@ -288,6 +286,8 @@ public class Unit : MonoBehaviour
 
             GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
             gm.RemoveInfoPanel(enemy);
+            enemy.lastTile.SetSelected(false);
+            enemy.lastTile = null;
             Destroy(enemy.gameObject);
         }
 
@@ -307,6 +307,8 @@ public class Unit : MonoBehaviour
 
             gm.ResetTiles(); // reset tiles when we die
             gm.RemoveInfoPanel(this);
+            lastTile.SetSelected(false);
+            lastTile = null;
             Destroy(gameObject);
         }
 
@@ -343,17 +345,22 @@ public class Unit : MonoBehaviour
         }
     }
 
-    IEnumerator StartMovement(Transform movePos) { // Moves the character to his new position.
+    IEnumerator StartMovement(Transform movePos, int unitIndex)
+    { // Moves the character to his new position.
+        if (playerNumber == 2)
+        {
+            yield return new WaitForSeconds(0.1f * unitIndex);
+        }
 
-
-        while (transform.position.x != movePos.position.x) { // first aligns him with the new tile's x pos
+        while (transform.position.x != movePos.position.x)
+        { // first aligns him with the new tile's x pos
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(movePos.position.x, transform.position.y), moveSpeed * Time.deltaTime);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
         while (transform.position.y != movePos.position.y) // then y
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, movePos.position.y), moveSpeed * Time.deltaTime);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         hasMoved = true;
@@ -361,5 +368,7 @@ public class Unit : MonoBehaviour
         GetEnemies();
         GetVillages();
         gm.MoveInfoPanel(this);
+        
+        transform.position = movePos.position;
     }
 }

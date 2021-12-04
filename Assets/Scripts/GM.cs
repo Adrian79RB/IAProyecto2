@@ -55,7 +55,12 @@ public class GM : MonoBehaviour
         foreach( var tile in tiles)
         {
             if (!tile.isClear())
-                tile.isSelected = true;
+            {
+                tile.SetSelected(true);
+                Collider2D col = Physics2D.OverlapCircle(tile.transform.position, 0.2f, LayerMask.GetMask("Obstacle"));
+                if (col.GetComponent<Unit>())
+                    col.GetComponent<Unit>().lastTile = tile;
+            }
         }
         
     }

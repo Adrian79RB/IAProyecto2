@@ -323,9 +323,11 @@ MonoBehaviour:
   hasMoved: 0
   tileSpeed: 2
   moveSpeed: 10
+  gm: {fileID: 0}
   attackRadius: 1
   hasAttacked: 0
   enemiesInRange: []
+  enemyVillages: []
   playerNumber: 1
   weaponIcon: {fileID: 484875170324854395}
   health: 20
@@ -338,6 +340,7 @@ MonoBehaviour:
   deathEffect: {fileID: 8882834092664154197, guid: 43e58a09770a414488a4edf9a2bb5ea7,
     type: 3}
   isKing: 1
+  lastTile: {fileID: 0}
   displayedText: {fileID: 0}
 --- !u!114 &484875169853229651
 MonoBehaviour:
@@ -376,7 +379,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.55, y: 2.51}
+  m_Size: {x: 3.5, y: 3.5}
   m_EdgeRadius: 0
 --- !u!82 &1361933532
 AudioSource:
@@ -542,7 +545,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 537989683
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -838988493365444387, guid: 17fd67ba01aab994d8b6a80c6b728376,
     type: 3}

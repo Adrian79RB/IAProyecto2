@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour
 
     public bool isWalkable;
     public bool isCreatable;
-    public bool isSelected;
+    private bool isSelected;
 
     private GM gm;
 
@@ -35,9 +35,7 @@ public class Tile : MonoBehaviour
         {
             return true;
         }
-        else {
-            if(col.GetComponent<Unit>())
-                col.GetComponent<Unit>().lastTile = this;
+        else { 
             return false;
         }
     }
@@ -60,10 +58,23 @@ public class Tile : MonoBehaviour
         isCreatable = true;
     }
 
+    public void SetSelected(bool state)
+    {
+        isSelected = state;
+    }
+    
+    public bool GetSelected()
+    {
+        return isSelected;
+    }
+
     private void OnMouseDown()
     {
         if (isWalkable == true) {
-            gm.selectedUnit.Move(this.transform);
+            gm.selectedUnit.lastTile.isSelected = false;
+            isSelected = true;
+            gm.selectedUnit.lastTile = this;
+            gm.selectedUnit.Move(this.transform, -1);
         } else if (isCreatable == true && gm.createdUnit != null) {
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             unit.hasMoved = true;
