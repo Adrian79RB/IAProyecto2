@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Archer
   - infoPanel
+  - river
+  - Flying
+  - tile
   layers:
   - Default
   - TransparentFX
@@ -42,6 +45,9 @@ TagManager:
   m_SortingLayers:
   - name: BG
     uniqueID: 299086965
+    locked: 0
+  - name: Tile
+    uniqueID: 4087614299
     locked: 0
   - name: Default
     uniqueID: 0
