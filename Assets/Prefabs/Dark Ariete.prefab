@@ -151,8 +151,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -8
-  m_Sprite: {fileID: 4469707333657897994, guid: d528151b4fb391d44a921b6baf6f002c,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -160,7 +159,7 @@ SpriteRenderer:
   m_Size: {x: 0.56, y: 0.91}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4446637797838685493
@@ -233,7 +232,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 824635215509593453, guid: d528151b4fb391d44a921b6baf6f002c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -241,7 +240,7 @@ SpriteRenderer:
   m_Size: {x: 5.04, y: 3.74}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4446637797977428393
@@ -314,8 +313,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -8
-  m_Sprite: {fileID: -7888572027569737909, guid: d528151b4fb391d44a921b6baf6f002c,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -323,7 +321,7 @@ SpriteRenderer:
   m_Size: {x: 0.54, y: 0.9}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4446637798367313339
@@ -396,8 +394,7 @@ SpriteRenderer:
   m_SortingLayerID: 214413123
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -8555599076299583737, guid: c0420fba51c992a48b4e94d9f648a34e,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.29411766}
   m_FlipX: 0
   m_FlipY: 0
@@ -405,7 +402,7 @@ SpriteRenderer:
   m_Size: {x: 4.32, y: 4.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4446637798450979530
@@ -423,8 +420,8 @@ GameObject:
   - component: {fileID: 1771498148}
   - component: {fileID: 1562438027}
   m_Layer: 9
-  m_Name: Dark Knight
-  m_TagString: Knight
+  m_Name: Dark Ariete
+  m_TagString: Ariete
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -438,7 +435,7 @@ Transform:
   m_GameObject: {fileID: 4446637798450979530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -20, y: 2, z: -0.15448211}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 4446637799576711689}
   - {fileID: 4446637797977428395}
@@ -491,7 +488,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.5, y: 3.5}
+  m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
 --- !u!114 &794876514
 MonoBehaviour:
@@ -507,27 +504,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   hasMoved: 0
-  tileSpeed: 2
+  tileSpeed: 1
   moveSpeed: 10
-  gm: {fileID: 0}
   attackRadius: 1
   hasAttacked: 0
   enemiesInRange: []
-  enemyVillages: []
   villagesInRange: []
   playerNumber: 1
   weaponIcon: {fileID: 699492358}
   health: 5
   attackDamage: 3
-  defenseDamage: 2
-  armor: 1
+  defenseDamage: 0
+  armor: 0
   damageIcon: {fileID: -5891122600849735030, guid: eb780ffd3e6d6b64d993bc8583781d30,
     type: 3}
-  cost: 40
+  cost: 100
   deathEffect: {fileID: 8882834092664154197, guid: 43e58a09770a414488a4edf9a2bb5ea7,
     type: 3}
+  trees: []
   isKing: 0
-  lastTile: {fileID: 0}
   displayedText: {fileID: 0}
 --- !u!114 &1771498148
 MonoBehaviour:
@@ -708,8 +703,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -6
-  m_Sprite: {fileID: 8812918150279519865, guid: d528151b4fb391d44a921b6baf6f002c,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -717,7 +711,7 @@ SpriteRenderer:
   m_Size: {x: 1.97, y: 1.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &4446637799576711799
@@ -793,9 +787,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -5
-  m_Sprite: {fileID: -6923740119856145308, guid: d528151b4fb391d44a921b6baf6f002c,
-    type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9cd17d6c37a502748b4f2d7b6f4ce021, type: 3}
+  m_Color: {r: 0.8396226, g: 0.37624598, b: 0.37624598, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -875,8 +868,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 3602430193687246736, guid: d528151b4fb391d44a921b6baf6f002c,
-    type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -884,6 +876,6 @@ SpriteRenderer:
   m_Size: {x: 1.48, y: 1.95}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0

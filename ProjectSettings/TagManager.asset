@@ -12,6 +12,8 @@ TagManager:
   - Siege
   - King
   - Level
+  - Ariete
+  - Tree
   layers:
   - Default
   - TransparentFX

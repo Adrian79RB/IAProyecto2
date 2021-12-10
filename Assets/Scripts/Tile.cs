@@ -14,28 +14,34 @@ public class Tile : MonoBehaviour
     public bool isCreatable;
     private bool isSelected;
 
+    //public List<GameObject> obst = new List<GameObject>();
+
+
     private GM gm;
 
     public float amount;
     private bool sizeIncrease;
 
-	private AudioSource source;
+    private AudioSource source;
 
     private void Start()
     {
-		source = GetComponent<AudioSource>();
+        source = GetComponent<AudioSource>();
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
     }
 
     public bool isClear() // does this tile have an obstacle on it. Yes or No?
     {
+
         Collider2D col = Physics2D.OverlapCircle(transform.position, 0.2f, obstacles);
         if (col == null)
         {
+            //Debug.Log(isWalkable);
             return true;
         }
-        else { 
+        else {
+            isWalkable = false;
             return false;
         }
     }
@@ -86,11 +92,62 @@ public class Tile : MonoBehaviour
             gm.ResetTiles();
             gm.createdVillage = null;
         }
+
+        
     }
 
 
     private void OnMouseEnter()
     {
+        /*for (int i = 0; i < obst.Count; i++)
+        {
+            //Tile .obdt. GM 
+
+            if (Mathf.Round(obst[i].transform.position.x) == transform.position.x && Mathf.Round(obst[i].transform.position.y) >= transform.position.y && Mathf.Round(obst[i].transform.position.y) <= gm.transform.position.y)
+            {
+                Debug.Log("En el if 1");
+               // if (gm.transform.position.y >= Mathf.Round(obst[i].transform.position.y))
+                
+                    isWalkable = false;
+                    Debug.Log("En el if 1.2");
+                    Debug.Log("Elemento: " + obst[i] + "Posicion obst: " + obst[i].transform.position + " Posicion tile: " + transform.position);
+                    Debug.Log(isWalkable);
+                
+
+                //else isWalkable = true;
+
+            }
+
+            else if (Mathf.Round(obst[i].transform.position.x) == transform.position.x && obst[i].transform.position.y <= transform.position.y && obst[i].transform.position.y >= gm.transform.position.y)
+            {
+                if (transform.position.y >= obst[i].transform.position.y + 1)
+                {
+                    isWalkable = false;
+                    Debug.Log("En el if 2");
+                }
+            }
+
+            else if (Mathf.Round(obst[i].transform.position.y) == transform.position.y && obst[i].transform.position.x >= transform.position.x && obst[i].transform.position.x <= gm.transform.position.x)
+            {
+                if (transform.position.x >= obst[i].transform.position.x + 1)
+                {
+                    isWalkable = false;
+                    Debug.Log("En el if 3");
+                }
+            }
+
+
+            else if (Mathf.Round(obst[i].transform.position.y) == transform.position.y && obst[i].transform.position.x <= transform.position.x && obst[i].transform.position.x >= gm.transform.position.x)
+            {
+                if (transform.position.x >= obst[i].transform.position.x + 1)
+                {
+                    isWalkable = false;
+                    Debug.Log("En el if 4");
+                }
+            }
+        
+        }*/
+
         if (isClear() == true) {
 			source.Play();
 			sizeIncrease = true;
@@ -101,6 +158,7 @@ public class Tile : MonoBehaviour
 
     private void OnMouseExit()
     {
+
         if (isClear() == true)
         {
             sizeIncrease = false;
