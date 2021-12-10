@@ -47,9 +47,14 @@ public class Unit : MonoBehaviour
 
     private void Start()
     {
-		source = GetComponent<AudioSource>();
-		camAnim = Camera.main.GetComponent<Animator>();
+        
         gm = FindObjectOfType<GM>();
+        
+        
+            source = GetComponent<AudioSource>();
+            camAnim = Camera.main.GetComponent<Animator>();
+        
+
         UpdateHealthDisplay();
         village = FindObjectOfType<Village>();
         trees = GameObject.FindGameObjectsWithTag("Tree");
@@ -129,22 +134,6 @@ public class Unit : MonoBehaviour
                 
                
             }
-            
-            /*else if (gm.selectedUnit != null )
-            {
-                Debug.Log(gm.selectedUnit.villagesInRange[0]);
-                Debug.Log(village);
-                Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
-                Debug.Log(gm.selectedUnit);
-                if  (gm.selectedUnit.villagesInRange.Contains(village))
-                { // does the currently selected unit have in his list the enemy we just clicked on
-                    Debug.Log("Entra3");
-                    gm.selectedUnit.AttackVillage(village);
-
-                }
-
-
-            }*/
         }
     }
 

@@ -235,6 +235,8 @@ MonoBehaviour:
     type: 3}
   damageIcon: {fileID: -5891122600849735030, guid: eb780ffd3e6d6b64d993bc8583781d30,
     type: 3}
+  gm: {fileID: 0}
+  unit: {fileID: 0}
   isSelected: 0
   health: 2
   attackDamage: 0

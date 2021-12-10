@@ -1,37 +1,22 @@
 fileFormatVersion: 2
-guid: b407f78d3f465564c95b3f9cdecc03cb
+guid: 62e0dc7720f7e164ea08030f5a2548a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3849935670486903643
-    second: darkBarrackButtons_0
+      213: 7313767895172839712
+    second: arietenegro_0
   - first:
-      213: 7490783167396082281
-    second: darkBarrackButtons_1
+      213: -1649463884783623892
+    second: arietenegro_1
   - first:
-      213: 4048491406095854491
-    second: darkBarrackButtons_2
+      213: 6714420756486496858
+    second: arietenegro_2
   - first:
-      213: 7323781782410495626
-    second: darkBarrackButtons_3
+      213: 4396324268307454673
+    second: arietenegro_3
   - first:
-      213: -4081913968355980285
-    second: darkBarrackButtons_4
-  - first:
-      213: -6678474163137999164
-    second: darkBarrackButtons_0
-  - first:
-      213: -6640945996614076866
-    second: darkBarrackButtons_1
-  - first:
-      213: -631870561660131364
-    second: darkBarrackButtons_2
-  - first:
-      213: 3818103514413608765
-    second: darkBarrackButtons_3
-  - first:
-      213: 2634623499123248573
-    second: darkBarrackButtons_4
+      213: 2596532645134308820
+    second: arietenegro_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -87,7 +72,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -113,47 +98,11 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: darkBarrackButtons_0
+      name: arietenegro_0
       rect:
         serializedVersion: 2
         x: 39
@@ -167,14 +116,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ce0988f12b4153a0800000000000000
-      internalID: -6678474163137999164
+      spriteID: 029fe619629bf7560800000000000000
+      internalID: 7313767895172839712
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: darkBarrackButtons_1
+      name: arietenegro_1
       rect:
         serializedVersion: 2
         x: 719
@@ -188,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e36f3432dce96d3a0800000000000000
-      internalID: -6640945996614076866
+      spriteID: c21e2a5065deb19e0800000000000000
+      internalID: -1649463884783623892
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: darkBarrackButtons_2
+      name: arietenegro_2
       rect:
         serializedVersion: 2
         x: 721
@@ -209,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd7a83c62152b37f0800000000000000
-      internalID: -631870561660131364
+      spriteID: a5223ee7a1a6e2d50800000000000000
+      internalID: 6714420756486496858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: darkBarrackButtons_3
+      name: arietenegro_3
       rect:
         serializedVersion: 2
         x: 718
@@ -230,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3f2b4ccae0acf430800000000000000
-      internalID: 3818103514413608765
+      spriteID: 1da15e911a1e20d30800000000000000
+      internalID: 4396324268307454673
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: darkBarrackButtons_4
+      name: arietenegro_4
       rect:
         serializedVersion: 2
         x: 715
@@ -251,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dbd43261d10109420800000000000000
-      internalID: 2634623499123248573
+      spriteID: 4d59fe80facb80420800000000000000
+      internalID: 2596532645134308820
       vertices: []
       indices: 
       edges: []
