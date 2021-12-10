@@ -14,7 +14,6 @@ public class CharacterCreation : MonoBehaviour
     public GameObject player1Menu;
     public GameObject player2Menu;
 
-
     private void Start()
     {
         gm = FindObjectOfType<GM>();

@@ -11,6 +11,7 @@ TagManager:
   - House
   - Siege
   - King
+  - Level
   layers:
   - Default
   - TransparentFX
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: Sky
     uniqueID: 537989683
+    locked: 0
+  - name: Units
+    uniqueID: 2664546479
     locked: 0
