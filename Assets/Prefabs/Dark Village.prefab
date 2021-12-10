@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2639005678716937101}
   - component: {fileID: 1435459608297052079}
-  - component: {fileID: 9197349041260842094}
-  - component: {fileID: 7843392848015287346}
   m_Layer: 9
   m_Name: Sword
   m_TagString: Untagged
@@ -4964,7 +4962,6 @@ Transform:
   - {fileID: 7767452285305538948}
   - {fileID: 7767452285256654379}
   - {fileID: 2639005678716937101}
-  - {fileID: 9197349041260842094}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5075,12 +5072,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62aecad445fae4896bdfd9fd4207abce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponIcon: {fileID: 2183029763974304237}
+  weaponIcon: {fileID: 4896271811897834879}
   goldPerTurn: 10
   playerNumber: 1
   cost: 100
   health: 25
-  weaponIcon: {fileID: 4896271811897834879}
+  deathEffect: {fileID: 0}
+  damageIcon: {fileID: 0}
+  unit: {fileID: 0}
+  isSelected: 0
+  attackDamage: 0
+  defenseDamage: 0
+  armor: 0
 --- !u!114 &1525444925564633459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5094,13 +5097,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 0.35
-  deathEffect: {fileID: 8882834092664154197, guid: 43e58a09770a414488a4edf9a2bb5ea7,
-    type: 3}
-  damageIcon: {fileID: 0}
-  gm: {fileID: 0}
-  unit: {fileID: 0}
-  isSelected: 0
-  health: 2
-  attackDamage: 0
-  defenseDamage: 0
-  armor: 0

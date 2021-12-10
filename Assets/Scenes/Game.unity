@@ -5193,6 +5193,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &286533159 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 626269173125141466, guid: dfd3953b532394b459bb5b605feb9936,
+    type: 3}
+  m_PrefabInstance: {fileID: 1372252080}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &287163400 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7677967910336022200, guid: d0745185e498645d1b87c30c3d4a70aa,
@@ -30080,6 +30086,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 467940898}
     m_Modifications:
+    - target: {fileID: 626269173125141466, guid: dfd3953b532394b459bb5b605feb9936,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 626269173632994742, guid: dfd3953b532394b459bb5b605feb9936,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -50474,11 +50485,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748344637}
     m_Modifications:
-    - target: {fileID: 2183029763974304237, guid: da3435065a89e2442b5138b621f7826c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c,
         type: 3}
       propertyPath: m_Name
@@ -50538,16 +50544,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197349041260842094, guid: da3435065a89e2442b5138b621f7826c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9197349041260842094, guid: da3435065a89e2442b5138b621f7826c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da3435065a89e2442b5138b621f7826c, type: 3}
@@ -53489,6 +53485,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748344637}
     m_Modifications:
+    - target: {fileID: 726293821197588629, guid: da3435065a89e2442b5138b621f7826c,
+        type: 3}
+      propertyPath: weaponIcon
+      value: 
+      objectReference: {fileID: 286533159}
     - target: {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c,
         type: 3}
       propertyPath: m_Name
@@ -53794,6 +53795,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6498002310882265172, guid: 76ee34c1b9be29f4ebb1071fbfe8504a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}

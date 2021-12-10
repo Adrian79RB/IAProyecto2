@@ -96,8 +96,6 @@ public class Unit : MonoBehaviour
                 { // deselect the unit that is currently selected, so there's only one isSelected unit at a time
                     gm.selectedUnit.isSelected = false;
                 }
-              
-                
 
                 gm.ResetTiles();
 
@@ -117,9 +115,6 @@ public class Unit : MonoBehaviour
                 }
                 
             }
-
-           
-
         }
 
 
@@ -217,20 +212,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    void GetVillages(){
-        enemyVillages.Clear();
-
-        Village[] villages = FindObjectsOfType<Village>();
-        foreach (Village village in villages){
-            if(Mathf.Abs(transform.position.x - village.transform.position.x)+Mathf.Abs(transform.position.y - village.transform.position.y)<= attackRadius){
-                if(village.playerNumber != gm.playerTurn && !hasAttacked){
-                    enemyVillages.Add(village);
-                    village.weaponIcon.SetActive(true);
-                }
-            }
-        }
-    }
-
     public void Move(Transform movePos, int unitIndex)
     {
         gm.ResetTiles();
@@ -262,8 +243,6 @@ public class Unit : MonoBehaviour
         if(transform.tag == "King"){
 
         }
-        
-        
 
         if (enemyDamege >= 1 && transform.tag != "Ariete")
         {
@@ -355,30 +334,11 @@ public class Unit : MonoBehaviour
   
 
     }
-    void AttackVillage(Village village){
+    public void AttackVillage(Village village){
         hasAttacked = true;
-        int damage = attackDamage;
-        DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
-        d.Setup(damage);
-
-        if(village.health <= 0){
-            if (deathEffect != null){
-				Instantiate(deathEffect, village.transform.position, Quaternion.identity);
-				camAnim.SetTrigger("shake");
-			}
-            GetWalkableTiles();
-            gm.RemoveInfoPanel(village);
-            Destroy(village.gameObject);
-        }
-    }
-
-    public void AttackVillage(Village village)
-    {
-        hasAttacked = true;
-
         int villageDamege = attackDamage - village.armor;
         int unitDamage = village.defenseDamage - armor;
-        Debug.Log("Quiere atacar");
+
         if (transform.tag == "Ariete")
         {
             Debug.Log("Entra");
@@ -388,7 +348,6 @@ public class Unit : MonoBehaviour
                 DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
                 d.Setup(villageDamege);
             }
-
             else
             {
                 if (unitDamage >= 1)
@@ -431,9 +390,7 @@ public class Unit : MonoBehaviour
 
             gm.UpdateInfoStats();
         }
-
     }
-
 
     public void ResetWeaponIcon() {
         Unit[] enemies = FindObjectsOfType<Unit>();
@@ -476,7 +433,6 @@ public class Unit : MonoBehaviour
 
     void GetVillages()
     {
-         
         villagesInRange.Clear();
         Village[] villages = FindObjectsOfType<Village>();
         foreach (Village village in villages)
@@ -490,12 +446,7 @@ public class Unit : MonoBehaviour
                     village.weaponIcon.SetActive(true);
                     Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
                 }
-                
-
             }
         }
     }
-
-
-
 }

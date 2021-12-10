@@ -10,7 +10,17 @@ public class Village : MonoBehaviour
     public int playerNumber;
     public int cost;
     public int health;
-    public GameObject weaponIcon;
+   
+    public GameObject deathEffect;
+    public DamageIcon damageIcon;
+    public Unit unit;
+    public bool isSelected;
+
+    // Attack Stats
+    public int attackDamage;
+    public int defenseDamage;
+    public int armor;
+
     private GM gm;
 
     public void Start(){
@@ -23,22 +33,6 @@ public class Village : MonoBehaviour
         {
             gm.UpdateInfoPanVil(this);
         }
-    }
-    public GameObject deathEffect;
-    public DamageIcon damageIcon;
-    public GM gm;
-    public Unit unit;
-    public bool isSelected;
-
-    // Attack Stats
-    public int health;
-    public int attackDamage;
-    public int defenseDamage;
-    public int armor;
-
-    private void Start()
-    {
-        gm = FindObjectOfType<GM>();
     }
 
     public void OnMouseDown()
@@ -57,8 +51,6 @@ public class Village : MonoBehaviour
                 gm.selectedUnit.AttackVillage(village);
 
             }
-
-
         }
     }
 
