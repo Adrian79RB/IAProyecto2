@@ -17,8 +17,11 @@ public class MapGenerator : MonoBehaviour
     public int maxFilas;
 
     public Tesela[] tiles;
+    public GameObject tree;
+    public Transform treeFather;
 
     private GameObject[,] teselas;
+
 
 
 
@@ -33,6 +36,11 @@ public class MapGenerator : MonoBehaviour
                 Vector2 position = new Vector2 (transform.position.x + j * 1, transform.position.y + i * 1);
                 int chosenIndex = weigthedRandom();
                 Instantiate(tiles[chosenIndex].tile, position, Quaternion.identity, transform);
+                
+                if(tiles[chosenIndex].tile.name == "Tile 1" && UnityEngine.Random.value < 0.1)
+                {
+                    Instantiate(tree, position, Quaternion.identity, treeFather);
+                }
             }
         }
     }

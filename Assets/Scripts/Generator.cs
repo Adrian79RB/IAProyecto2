@@ -20,27 +20,33 @@ public class Generator : MonoBehaviour
 
         UnitsFather = GameObject.Find("Units").transform;
 
-        for(int i = 0; i < prefabsBlue.Length; i++)
-        {
-            int indexUnit = Random.Range( 0, prefabsBlue.Length);
-            Vector2 locationUnit = new Vector2(Mathf.RoundToInt(Random.Range(mapa.transform.position.x, mapa.transform.position.x + mapa.maxColumnas-1) * offSet), Mathf.RoundToInt(Random.Range(mapa.transform.position.y + mapa.maxFilas/2, mapa.transform.position.y + mapa.maxFilas-1) * offSet));
+        int i = 0;
 
-            Instantiate(prefabsBlue[indexUnit], locationUnit, Quaternion.identity, UnitsFather);
+        while(i < prefabsBlue.Length)
+        {
+            Vector2 locationUnit = new Vector2(Mathf.RoundToInt(Random.Range(mapa.transform.position.x, mapa.transform.position.x + mapa.maxColumnas-1) * offSet), Mathf.RoundToInt(Random.Range(mapa.transform.position.y + mapa.maxFilas/2, mapa.transform.position.y + mapa.maxFilas-1) * offSet));
+            Collider2D col = Physics2D.OverlapCircle(locationUnit, 0.3f, LayerMask.GetMask("Obstacle"));
+
+            if(col == null)
+            {
+                Instantiate(prefabsBlue[i], locationUnit, Quaternion.identity, UnitsFather);
+                i++;
+            }
         }
 
-        for(int i = 0; i < prefabsRed.Length; i++)
+        i = 0;
+
+        while(i < prefabsRed.Length)
         {
 
-            int indexUnit = Random.Range( 0, prefabsRed.Length);
             Vector2 locationUnit = new Vector2(Mathf.RoundToInt(Random.Range(mapa.transform.position.x, mapa.transform.position.x + mapa.maxColumnas-1) * offSet), Mathf.RoundToInt(Random.Range(mapa.transform.position.y, mapa.transform.position.y + (mapa.maxFilas/2)-1) * offSet));
+            Collider2D col = Physics2D.OverlapCircle(locationUnit, 0.3f, LayerMask.GetMask("Obstacle"));
 
-            Instantiate(prefabsRed[indexUnit], locationUnit, Quaternion.identity, UnitsFather);
+            if(col == null)
+            {
+                Instantiate(prefabsRed[i], locationUnit, Quaternion.identity, UnitsFather);
+                i++;
+            }
         } 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
