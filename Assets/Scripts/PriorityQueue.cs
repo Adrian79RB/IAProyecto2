@@ -51,7 +51,7 @@ public class PriorityQueue
                         nuevo.siguiente = nodo;
                         return;
                     }
-                    else if (nodo.siguiente == null && nodo.prioridad < nuevo.prioridad) //Si llegamos al �ltimo nodo y siguen siendo m�s peque�os
+                    else if (nodo.siguiente == null) //Si llegamos al �ltimo nodo y siguen siendo m�s peque�os
                     {
                         nodo.siguiente = nuevo;
                         nuevo.anterior = nodo;
@@ -169,5 +169,15 @@ public class PriorityQueue
     public int getLegth()
     {
         return length;
+    }
+
+    public void MostrarContenido()
+    {
+        int i = 1;
+        for (NodoPQ nodo = raiz; nodo != null; nodo = nodo.siguiente)
+        {
+            Debug.Log("Nodo " + i + ": " + nodo.tile.transform.position);
+            i++;
+        }
     }
 }

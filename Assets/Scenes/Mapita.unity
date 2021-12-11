@@ -281,7 +281,7 @@ MonoBehaviour:
   player1Gold: 0
   player2Gold: 0
   player1GoldText: {fileID: 57358381}
-  player2GoldText: {fileID: 1525333689}
+  player2GoldText: {fileID: 1242379181}
   createdUnit: {fileID: 0}
   createdVillage: {fileID: 0}
   blueVictory: {fileID: 601460256}
@@ -6061,7 +6061,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1494413345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17, y: 9, z: -10}
+  m_LocalPosition: {x: 13, y: 9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6095,7 +6095,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1499435332}
-  - component: {fileID: 1499435331}
   - component: {fileID: 1499435333}
   m_Layer: 9
   m_Name: Units
@@ -6104,47 +6103,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1499435331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499435330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b20a335864be42241bd99287bfe81ae4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabsBlue:
-  - {fileID: 626269173632994743, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
-  - {fileID: 626269173632994743, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
-  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
-  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
-  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
-  - {fileID: 3831706681586816672, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
-  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
-  - {fileID: 3831706681586816672, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
-  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
-  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
-  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
-  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
-  - {fileID: 179943397156523648, guid: 0fb875a05caa9ef42bc5ab8ca814b69d, type: 3}
-  prefabsRed:
-  - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
-  - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
-  - {fileID: 1642533359335901395, guid: 88b3f3ba5316f7e45aac1f15d6b71e81, type: 3}
-  - {fileID: 1642533359335901395, guid: 88b3f3ba5316f7e45aac1f15d6b71e81, type: 3}
-  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
-  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
-  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
-  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
-  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
-  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
-  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
-  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
-  - {fileID: 484875169853229663, guid: f054a74375d258145b59bb210d52b539, type: 3}
-  offSet: 1
 --- !u!4 &1499435332
 Transform:
   m_ObjectHideFlags: 0
@@ -6445,7 +6403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babb78a69c128324693a540bf9208a2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxColumnas: 35
+  maxColumnas: 27
   maxFilas: 19
   tiles:
   - peso: 6
@@ -6454,6 +6412,35 @@ MonoBehaviour:
     tile: {fileID: 1400129975932591192, guid: 6247254416e8353489f7f026beeddf91, type: 3}
   tree: {fileID: 4379164738978478547, guid: 7711b3dfa3e1c7f428810dd94b81b048, type: 3}
   treeFather: {fileID: 1365567987}
+  prefabsBlue:
+  - {fileID: 626269173632994743, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
+  - {fileID: 626269173632994743, guid: dfd3953b532394b459bb5b605feb9936, type: 3}
+  - {fileID: 3831706681586816672, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
+  - {fileID: 3831706681586816672, guid: 0f0a2447a78d86143a35917ac0efe6e7, type: 3}
+  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
+  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
+  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
+  - {fileID: 203797387408590348, guid: e4ad95c761a65f243b449f1e95d0c00e, type: 3}
+  - {fileID: 179943397156523648, guid: 0fb875a05caa9ef42bc5ab8ca814b69d, type: 3}
+  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  prefabsRed:
+  - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
+  - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
+  - {fileID: 1642533359335901395, guid: 88b3f3ba5316f7e45aac1f15d6b71e81, type: 3}
+  - {fileID: 1642533359335901395, guid: 88b3f3ba5316f7e45aac1f15d6b71e81, type: 3}
+  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
+  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
+  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
+  - {fileID: 4446637798450979530, guid: f39be49cad0c02340820d187847171e4, type: 3}
+  - {fileID: 484875169853229663, guid: f054a74375d258145b59bb210d52b539, type: 3}
+  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
+  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
+  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
+  - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
+  offSet: 1
 --- !u!4 &1682529151
 Transform:
   m_ObjectHideFlags: 0

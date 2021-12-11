@@ -22,10 +22,19 @@ public class MapGenerator : MonoBehaviour
 
     public Tile[,] teselas;
 
+
+    public GameObject[] prefabsBlue;
+    public GameObject[] prefabsRed;
+    private Transform UnitsFather;
+
+    public float offSet;
+
     // Start is called before the first frame update
     void Start()
     {
+        UnitsFather = GameObject.Find("Units").transform;
         teselas = new Tile[maxFilas, maxColumnas];
+
         for(int i = 0; i < maxFilas; i++)
         {
             for(int j = 0; j < maxColumnas; j++)
@@ -42,6 +51,35 @@ public class MapGenerator : MonoBehaviour
                 {
                     teselas[i, j].tag = "river";
                 }
+            }
+        }
+
+        int k = 0;
+
+        while (k < prefabsBlue.Length)
+        {
+            Vector2 locationUnit = new Vector2(Mathf.RoundToInt(UnityEngine.Random.Range(transform.position.x, transform.position.x + maxColumnas - 1) * offSet), Mathf.RoundToInt(UnityEngine.Random.Range(transform.position.y + maxFilas / 2, transform.position.y + maxFilas - 1) * offSet));
+            Collider2D col = Physics2D.OverlapCircle(locationUnit, 0.3f, LayerMask.GetMask("Obstacle"));
+
+            if (col == null)
+            {
+                Instantiate(prefabsBlue[k], locationUnit, Quaternion.identity, UnitsFather);
+                k++;
+            }
+        }
+
+        k = 0;
+
+        while (k < prefabsRed.Length)
+        {
+
+            Vector2 locationUnit = new Vector2(Mathf.RoundToInt(UnityEngine.Random.Range(transform.position.x, transform.position.x + maxColumnas - 1) * offSet), Mathf.RoundToInt(UnityEngine.Random.Range(transform.position.y, transform.position.y + (maxFilas / 2) - 1) * offSet));
+            Collider2D col = Physics2D.OverlapCircle(locationUnit, 0.3f, LayerMask.GetMask("Obstacle"));
+
+            if (col == null)
+            {
+                Instantiate(prefabsRed[k], locationUnit, Quaternion.identity, UnitsFather);
+                k++;
             }
         }
 

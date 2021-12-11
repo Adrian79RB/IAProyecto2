@@ -18,7 +18,7 @@ public static class PathfindingClass
         PriorityQueue closedQueue = new PriorityQueue();
 
         openedQueue.Insertar(nodoActual, nodoActual.estimatedTotalCost);
-
+        
         while (openedQueue.getLegth() > 0)
         {
             nodoActual = openedQueue.Devolver();
@@ -38,7 +38,7 @@ public static class PathfindingClass
                         continue;
 
                     closedQueue.EliminarNodo(nodoAuxiliar);
-                    distanceToStart = nodoAuxiliar.estimatedTotalCost - nodoActual.costSoFar;
+                    distanceToStart = nodoAuxiliar.estimatedTotalCost - nodoAuxiliar.costSoFar;
                 }
                 else if (openedQueue.EncontrarNodo(nextNode))
                 {
@@ -50,12 +50,13 @@ public static class PathfindingClass
                 }
                 else
                 {
-                    distanceToStart = Mathf.Sqrt(Mathf.Pow(nextNode.transform.position.x - start.transform.position.x, 2) + Mathf.Pow(nextNode.transform.position.y - start.transform.position.y, 2)); ;
+                    distanceToStart = Mathf.Sqrt(Mathf.Pow(nextNode.transform.position.x - start.transform.position.x, 2) + Mathf.Pow(nextNode.transform.position.y - start.transform.position.y, 2));
                 }
 
                 nextNode.costSoFar = distanceToNextNode;
                 nextNode.estimatedTotalCost = distanceToNextNode + distanceToStart;
                 nextNode.father = nodoActual;
+
 
                 if (!openedQueue.EncontrarNodo(nextNode) && !closedQueue.EncontrarNodo(nextNode))
                     openedQueue.Insertar(nextNode, nextNode.estimatedTotalCost);
@@ -70,10 +71,12 @@ public static class PathfindingClass
         {
             /*while (nodoActual != target)
             {
+                Debug.Log("Nodo actual: " + nodoActual.transform.position);
                 nodesList[nodoActual.getId()] = nodoActual.father.getId();
                 Nodo aux = nodoActual.father;
                 //nodoActual.father = null;
                 nodoActual = aux;
+                nodoActual = nodoActual.father;
             }*/
         }
     }

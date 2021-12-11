@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
 
     public bool isWalkable;
     public bool isCreatable;
+    [SerializeField]
     private bool isSelected;
 
     //public List<GameObject> obst = new List<GameObject>();
@@ -95,8 +96,8 @@ public class Tile : MonoBehaviour
         if (isWalkable == true) {
             gm.selectedUnit.lastTile.isSelected = false;
             isSelected = true;
-            gm.selectedUnit.lastTile = this;
             gm.selectedUnit.Move(this.transform, -1);
+            gm.selectedUnit.lastTile = this;
         } else if (isCreatable == true && gm.createdUnit != null) {
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             unit.hasMoved = true;

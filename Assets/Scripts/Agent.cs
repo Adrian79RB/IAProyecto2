@@ -183,9 +183,8 @@ public class Agent : MonoBehaviour
             {
                 ally.lastTile.SetSelected(false);
                 targetTile.GetComponent<Tile>().SetSelected(true);
-                ally.lastTile = targetTile.GetComponent<Tile>();
-
                 ally.Move(targetTile.transform, i);
+                ally.lastTile = targetTile.GetComponent<Tile>();
                 ally.ResetWeaponIcon();
             }
         }
