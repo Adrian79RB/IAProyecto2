@@ -17,8 +17,6 @@ public class Village : MonoBehaviour
     public bool isSelected;
 
     // Attack Stats
-    public int attackDamage;
-    public int defenseDamage;
     public int armor;
 
     private GM gm;
