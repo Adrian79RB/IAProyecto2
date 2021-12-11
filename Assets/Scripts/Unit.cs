@@ -10,6 +10,8 @@ public class Unit : MonoBehaviour
     public bool hasMoved;
 
     public int tileSpeed;
+    private int riverTileSpeed = 1;
+    private int copyTileSpeed;
     public float moveSpeed;
 
     public GM gm;
@@ -51,6 +53,10 @@ public class Unit : MonoBehaviour
 
     private Village village;
 
+    public bool flying;
+    public bool onRiver;
+    public bool outOfRiver = false;
+
     private void Start()
     {
 		source = GetComponent<AudioSource>();
@@ -74,6 +80,7 @@ public class Unit : MonoBehaviour
             }
         }
         UpdateHealthDisplay();
+        copyTileSpeed = tileSpeed;
     }
 
     private void UpdateHealthDisplay ()
@@ -201,6 +208,7 @@ public class Unit : MonoBehaviour
                 }
             }
         }
+        
     }
 
     public void GetEnemies() {
@@ -428,8 +436,49 @@ public class Unit : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, movePos.position.y), moveSpeed * Time.deltaTime);
             yield return new WaitForFixedUpdate();
+    IEnumerator StartMovement(Transform movePos) { // Moves the character to his new position.
+        Collider2D[] coll = new Collider2D[1];
+        ContactFilter2D filter = new ContactFilter2D();
+        if(!onRiver && this.tag!="Flying"){
+            while (transform.position.x != movePos.position.x) { // first aligns him with the new tile's x pos
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(movePos.position.x, transform.position.y), moveSpeed * Time.deltaTime);
+                int colliderCount = this.GetComponent<BoxCollider2D>().OverlapCollider(filter, coll);
+                if(coll[0].gameObject.tag == "river"){
+                    movePos = coll[0].transform;
+                    onRiver = true;
+                    tileSpeed = riverTileSpeed;
+                }
+                yield return null;
+            }
+            while (transform.position.y != movePos.position.y) // then y
+            {
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, movePos.position.y), moveSpeed * Time.deltaTime);
+                int colliderCount = this.GetComponent<BoxCollider2D>().OverlapCollider(filter, coll);
+                if(coll[0].gameObject.tag == "river"){
+                    movePos = coll[0].transform;
+                    onRiver = true;
+                    tileSpeed = riverTileSpeed;
+                }
+                yield return null;
+            }
+        }else{
+            while (transform.position.x != movePos.position.x) { // first aligns him with the new tile's x pos
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(movePos.position.x, transform.position.y), moveSpeed * Time.deltaTime);
+                yield return null;
+            }
+            while (transform.position.y != movePos.position.y) // then y
+            {
+                transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, movePos.position.y), moveSpeed * Time.deltaTime);
+                yield return null;
+            }
+            outOfRiver = true;
         }
-
+        
+        if(outOfRiver){
+            onRiver = false;
+            outOfRiver = false;
+            tileSpeed = copyTileSpeed;
+        }
         hasMoved = true;
         ResetWeaponIcon();
         GetEnemies();

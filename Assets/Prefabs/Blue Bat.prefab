@@ -499,6 +499,9 @@ MonoBehaviour:
     type: 3}
   isKing: 0
   displayedText: {fileID: 0}
+  flying: 0
+  onRiver: 0
+  outOfRiver: 0
 --- !u!61 &3831706681586816674
 BoxCollider2D:
   m_ObjectHideFlags: 0
