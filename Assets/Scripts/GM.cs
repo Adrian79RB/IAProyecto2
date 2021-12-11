@@ -9,6 +9,7 @@ using System;
 public class GM : MonoBehaviour
 {
     public Unit selectedUnit;
+    public Village selectedVillage;
 
     public int playerTurn = 1;
 
@@ -65,9 +66,17 @@ public class GM : MonoBehaviour
             selectedUnitSquare.gameObject.SetActive(true);
             selectedUnitSquare.position = selectedUnit.transform.position;
         }
+        
         else
         {
-            selectedUnitSquare.gameObject.SetActive(false);
+            if(selectedVillage != null){
+                selectedUnitSquare.gameObject.SetActive(true);
+                selectedUnitSquare.position = selectedVillage.transform.position;
+            }
+            else{
+                selectedUnitSquare.gameObject.SetActive(false);
+            }
+            
         }
 
     }

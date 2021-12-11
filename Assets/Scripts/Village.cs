@@ -39,18 +39,22 @@ public class Village : MonoBehaviour
     {
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
         Village village = col.GetComponent<Village>();
-        if (gm.selectedUnit != null)
+        if (gm.selectedVillage != null)
         {
-            Debug.Log(gm.selectedUnit.villagesInRange[0]);
+            gm.selectedVillage = village;
+            Debug.Log(gm.selectedVillage);
             Debug.Log(village);
-            Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
-            Debug.Log(gm.selectedUnit);
-            if (gm.selectedUnit.villagesInRange.Contains(village))
+            //Debug.Log(gm.selectedUnit.villages.Contains(village));
+            //Debug.Log(gm.selectedUnit);
+            //if (gm.selectedUnit.villages.Contains(village))
             { // does the currently selected unit have in his list the enemy we just clicked on
-                Debug.Log("Entra3");
-                gm.selectedUnit.AttackVillage(village);
+                //Debug.Log("Entra3");
+                //gm.selectedUnit.AttackVillage(village);
 
             }
+        }
+        else{
+            gm.selectedVillage = village;
         }
     }
 
