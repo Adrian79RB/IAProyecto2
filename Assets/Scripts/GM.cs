@@ -182,6 +182,7 @@ public class GM : MonoBehaviour
             selectedUnit.ResetWeaponIcon();
             selectedUnit.isSelected = false;
             selectedUnit = null;
+            selectedVillage = null;
         }
 
         ResetTiles();
