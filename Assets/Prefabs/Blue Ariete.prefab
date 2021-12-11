@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 569263047}
   m_Layer: 9
   m_Name: Blue Ariete
-  m_TagString: Ariete
+  m_TagString: Siege
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,9 +101,11 @@ MonoBehaviour:
   hasMoved: 0
   tileSpeed: 1
   moveSpeed: 10
+  gm: {fileID: 0}
   attackRadius: 1
   hasAttacked: 0
   enemiesInRange: []
+  enemyVillages: []
   villagesInRange: []
   playerNumber: 2
   weaponIcon: {fileID: 5927487738933377550}
@@ -118,6 +120,7 @@ MonoBehaviour:
     type: 3}
   trees: []
   isKing: 0
+  lastTile: {fileID: 0}
   displayedText: {fileID: 0}
 --- !u!114 &1584046052
 MonoBehaviour:

@@ -125,13 +125,13 @@ public class Unit : MonoBehaviour
         Debug.Log(gm.selectedUnit.villagesInRange.Count);
         if (col != null)
         {
-            if (gm.selectedUnit.tag == "Ariete")
+            if (gm.selectedUnit.tag == "Siege")
                 gm.selectedUnit.hasAttacked = false;
             Debug.Log("Entra1");
             Unit unit = col.GetComponent<Unit>(); // double check that what we clicked on is a unit
             
             //Village village = col.GetComponent<Village>();
-            if (unit != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Ariete")
+            if (unit != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Siege")
             {
                 if (gm.selectedUnit.enemiesInRange.Contains(unit) && !gm.selectedUnit.hasAttacked )
                 { // does the currently selected unit have in his list the enemy we just clicked on
@@ -204,7 +204,7 @@ public class Unit : MonoBehaviour
         {
             if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
-                if (enemy.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag != "Ariete") { // make sure you don't attack your allies
+                if (enemy.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag != "Siege") { // make sure you don't attack your allies
                     enemiesInRange.Add(enemy);
                     enemy.weaponIcon.SetActive(true);
                 }
@@ -244,7 +244,7 @@ public class Unit : MonoBehaviour
 
         }
 
-        if (enemyDamege >= 1 && transform.tag != "Ariete")
+        if (enemyDamege >= 1 && transform.tag != "Siege")
         {
             if (transform.tag == "Archer")
                 for (int i = 0; i < trees.Length; i++)
@@ -260,7 +260,7 @@ public class Unit : MonoBehaviour
             d.Setup(enemyDamege);
         }
 
-        if (transform.tag == "Archer" && enemy.tag != "Ariete")
+        if (transform.tag == "Archer" && enemy.tag != "Siege")
         {
             for (int i = 0; i < trees.Length; i++)
                 if (trees[i].transform.position.x == transform.position.x || trees[i].transform.position.y == transform.position.y)
@@ -339,7 +339,7 @@ public class Unit : MonoBehaviour
         int villageDamege = attackDamage - village.armor;
         int unitDamage = village.defenseDamage - armor;
 
-        if (transform.tag == "Ariete")
+        if (transform.tag == "Siege")
         {
             Debug.Log("Entra");
             if (villageDamege >= 1)
@@ -439,7 +439,7 @@ public class Unit : MonoBehaviour
         {
             if (Mathf.Abs(transform.position.x - village.transform.position.x) + Mathf.Abs(transform.position.y - village.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
-                if (village.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag == "Ariete")
+                if (village.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag == "Siege")
                 {
                     // make sure you don't attack your allies
                     villagesInRange.Add(village);
