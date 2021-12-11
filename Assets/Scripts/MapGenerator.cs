@@ -20,26 +20,27 @@ public class MapGenerator : MonoBehaviour
     public GameObject tree;
     public Transform treeFather;
 
-    private GameObject[,] teselas;
-
-
-
+    public Tile[,] teselas;
 
     // Start is called before the first frame update
     void Start()
     {
-        teselas = new GameObject[maxFilas, maxColumnas];
+        teselas = new Tile[maxFilas, maxColumnas];
         for(int i = 0; i < maxFilas; i++)
         {
             for(int j = 0; j < maxColumnas; j++)
             {
                 Vector2 position = new Vector2 (transform.position.x + j * 1, transform.position.y + i * 1);
                 int chosenIndex = weigthedRandom();
-                teselas[i, j] = Instantiate(tiles[chosenIndex].tile, position, Quaternion.identity, transform);
-                
+                teselas[i, j] = Instantiate(tiles[chosenIndex].tile, position, Quaternion.identity, transform).GetComponent<Tile>();
+
                 if(tiles[chosenIndex].tile.name == "Tile 1" && UnityEngine.Random.value < 0.1)
                 {
                     Instantiate(tree, position, Quaternion.identity, treeFather);
+                }
+                else if(tiles[chosenIndex].tile.name == "TileAgua")
+                {
+                    teselas[i, j].tag = "river";
                 }
             }
         }
@@ -48,6 +49,39 @@ public class MapGenerator : MonoBehaviour
         {
             for (int j = 0; j < maxColumnas; j++)
             {
+                if (i > 0) {
+                    teselas[i, j].arcs.Add(teselas[i - 1, j]);
+
+                    if (teselas[i - 1, j].tag == "river")
+                        teselas[i, j].weigths.Add(10);
+                    else
+                        teselas[i, j].weigths.Add(1);
+                }
+                if (i < maxFilas - 1) {
+                    teselas[i, j].arcs.Add(teselas[i + 1, j]);
+                    if (teselas[i + 1, j].tag == "river")
+                        teselas[i, j].weigths.Add(10);
+                    else
+                        teselas[i, j].weigths.Add(1);
+                }
+                if (j > 0)
+                {
+                    teselas[i, j].arcs.Add(teselas[i, j - 1]);
+                    if (teselas[i, j - 1].tag == "river")
+                        teselas[i, j].weigths.Add(10);
+                    else
+                        teselas[i, j].weigths.Add(1);
+                }
+                if (j < maxColumnas - 1)
+                {
+                    teselas[i, j].arcs.Add(teselas[i, j + 1]);
+                    if (teselas[i, j + 1].tag == "river")
+                        teselas[i, j].weigths.Add(10);
+                    else
+                        teselas[i, j].weigths.Add(1);
+                }
+
+                //Comprobar si la tesela esta ocupada por Unit
                 if (!teselas[i, j].GetComponent<Tile>().isClear())
                 {
                     teselas[i, j].GetComponent<Tile>().SetSelected(true);

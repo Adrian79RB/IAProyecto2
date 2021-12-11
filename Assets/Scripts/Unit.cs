@@ -171,12 +171,14 @@ public class Unit : MonoBehaviour
     public List<Tile> GetTilesArray()
     {
         ResetWeaponIcon();
+        
 
         if (gm.selectedUnit != null)
         {
             gm.selectedUnit.isSelected = false;
         }
-        //gm.ResetTiles();
+        
+        gm.ResetTiles();
         gm.selectedUnit = this;
 
         isSelected = true;
@@ -197,19 +199,57 @@ public class Unit : MonoBehaviour
             return;
         }
 
-        foreach (Tile tile in tiles) {
-            if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
-            { // how far he can move
-                if (tile.isClear() && !tile.GetSelected())
-                { // is the tile clear from any obstacles
-                    tile.Highlight();
-                    if(playerNumber == 2)
-                        walkableTiles.Add(tile);
+        if(transform.tag == "Bat")
+        {
+            foreach (Tile tile in tiles)
+            {
+                if (Mathf.Abs(transform.position.x - tile.transform.position.x) + Mathf.Abs(transform.position.y - tile.transform.position.y) <= tileSpeed)
+                { // how far he can move
+                    if (tile.isClear() && !tile.GetSelected())
+                    { // is the tile clear from any obstacles
+                        tile.Highlight();
+                        if (playerNumber == 2)
+                            walkableTiles.Add(tile);
+                    }
                 }
             }
         }
-        
+        else
+        {
+            if (playerNumber == 2)
+                walkableTiles.Add(lastTile);
+
+            for (int i = 0; i < lastTile.arcs.Count; i++)
+                RecurWalkableTilesGrafo(lastTile.arcs[i], 0);
+        }
     }
+
+    void RecurWalkableTilesGrafo(Tile currentTile, int step)
+    {
+        if (step >= tileSpeed)
+            return;
+
+        step++;
+        currentTile.Highlight();
+        if (playerNumber == 2)
+            walkableTiles.Add(currentTile);
+
+        for(int i = 0; i < currentTile.arcs.Count; i++)
+        {
+            if(currentTile.arcs[i].isClear() && !currentTile.arcs[i].GetSelected() && !currentTile.arcs[i].isWalkable)
+            {
+                if(currentTile.arcs[i].tag == "river" && step < tileSpeed)
+                {
+                    currentTile.arcs[i].Highlight();
+                    if (playerNumber == 2)
+                        walkableTiles.Add(currentTile.arcs[i]);
+                }
+                else
+                    RecurWalkableTilesGrafo(currentTile.arcs[i], step);
+            }
+        }
+    }
+
 
     public void GetEnemies() {
     
@@ -231,7 +271,12 @@ public class Unit : MonoBehaviour
     public void Move(Transform movePos, int unitIndex)
     {
         gm.ResetTiles();
-        StartCoroutine(StartMovement(movePos, unitIndex));
+        PathfindingClass.obtenerCamino(movePos.GetComponent<Tile>(), lastTile);
+
+        Tile target = lastTile.father;
+
+        while(lastTile.transform == movePos)
+            StartCoroutine(StartMovement(target.transform, unitIndex));
     }
 
     public void Attack(Unit enemy) {
@@ -430,7 +475,7 @@ public class Unit : MonoBehaviour
         Collider2D[] coll = new Collider2D[1];
         ContactFilter2D filter = new ContactFilter2D();
 
-        if (!onRiver && this.tag != "Flying")
+        if (!onRiver && this.tag != "Bat")
         {
             while (transform.position.x != movePos.position.x)
             { // first aligns him with the new tile's x pos

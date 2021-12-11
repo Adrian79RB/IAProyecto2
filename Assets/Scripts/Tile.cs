@@ -16,7 +16,6 @@ public class Tile : MonoBehaviour
 
     //public List<GameObject> obst = new List<GameObject>();
 
-
     public bool isRiver;
 
     private GM gm;
@@ -31,8 +30,7 @@ public class Tile : MonoBehaviour
     public float costSoFar;
     public float estimatedTotalCost;
     public Tile father;
-    int id;
-    int numRayos = 5;
+
 
     private void Start()
     {
@@ -40,32 +38,8 @@ public class Tile : MonoBehaviour
         gm = FindObjectOfType<GM>();
         rend = GetComponent<SpriteRenderer>();
         
-        weigths = new List<float>();
-        arcs = new List<Tile>();
         costSoFar = -1;
-        estimatedTotalCost = -1;
-
-        //Lanzamiento de rayos para construir el grafo
-        for (int i = 0; i < numRayos; i++)
-        {
-            //float angle = (Mathf.PI / 4 * i) * Mathf.Rad2Deg; //Da error si est� en mitad de una sala
-            float angle = (Mathf.PI / 2 * i) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            RaycastHit2D ray = Physics2D.Raycast(transform.position + new Vector3(0.45f, 0.44f, 0f), transform.TransformDirection(new Vector2(1, 0)));
-            Debug.Log(ray.transform.name);
-            if (ray.transform.tag == "tile" || ray.transform.tag == "river")
-            {               
-                    arcs.Add(ray.transform.gameObject.GetComponent<Tile>());
-                    if(ray.transform.gameObject.GetComponent<Tile>().isRiver){
-                        weigths.Add(2f);
-                    }
-                    else{
-                        weigths.Add(1f);
-                    }                
-            }
-            
-        }
-        
+        estimatedTotalCost = -1;  
     }
 
     public bool isClear() // does this tile have an obstacle on it. Yes or No?
@@ -210,17 +184,6 @@ public class Tile : MonoBehaviour
         if (isClear() == false && sizeIncrease == true) {
             sizeIncrease = false;
             transform.localScale -= new Vector3(amount, amount, amount);
-        }
-    }
-
-    private void Update()
-    {
-        for (int i = 0; i < numRayos; i++)
-        {
-            //float angle = (Mathf.PI / 4 * i) * Mathf.Rad2Deg; //Da error si est� en mitad de una sala
-            float angle = (Mathf.PI / 2 * i) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-            Debug.DrawRay(transform.position, transform.right, Color.red,2f);
         }
     }
 }
