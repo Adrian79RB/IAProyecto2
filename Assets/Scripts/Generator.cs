@@ -47,6 +47,6 @@ public class Generator : MonoBehaviour
                 Instantiate(prefabsRed[i], locationUnit, Quaternion.identity, UnitsFather);
                 i++;
             }
-        } 
+        }
     }
 }

@@ -57,15 +57,23 @@ public class Unit : MonoBehaviour
 		camAnim = Camera.main.GetComponent<Animator>();
         tiles = FindObjectsOfType<Tile>();
         gm = FindObjectOfType<GM>();
-        
-        
-            source = GetComponent<AudioSource>();
-            camAnim = Camera.main.GetComponent<Animator>();
-        
-
-        UpdateHealthDisplay();
+        source = GetComponent<AudioSource>();
+        camAnim = Camera.main.GetComponent<Animator>();
         village = FindObjectOfType<Village>();
         trees = GameObject.FindGameObjectsWithTag("Tree");
+
+        if (isKing)
+        {
+            GameObject canvas = GameObject.Find("Main Canvas");
+            for(int i = 0; i < canvas.transform.childCount; i++)
+            {
+                if (canvas.transform.GetChild(i).name == "Blue Flag")
+                    displayedText = canvas.transform.GetChild(i).GetChild(1).GetComponentInChildren<Text>();
+                else if (canvas.transform.GetChild(i).name == "Dark Flag")
+                    displayedText = canvas.transform.GetChild(i).GetChild(1).GetComponentInChildren<Text>();
+            }
+        }
+        UpdateHealthDisplay();
     }
 
     private void UpdateHealthDisplay ()

@@ -52,19 +52,6 @@ public class GM : MonoBehaviour
 		source = GetComponent<AudioSource>();
         camAnim = Camera.main.GetComponent<Animator>();
         GetGoldIncome(1);
-
-        Tile[] tiles = FindObjectsOfType<Tile>();
-        foreach( var tile in tiles)
-        {
-            if (!tile.isClear())
-            {
-                tile.SetSelected(true);
-                Collider2D col = Physics2D.OverlapCircle(tile.transform.position, 0.2f, LayerMask.GetMask("Obstacle"));
-                if (col.GetComponent<Unit>())
-                    col.GetComponent<Unit>().lastTile = tile;
-            }
-        }
-        
     }
 
     private void Update()

@@ -35,11 +35,27 @@ public class MapGenerator : MonoBehaviour
             {
                 Vector2 position = new Vector2 (transform.position.x + j * 1, transform.position.y + i * 1);
                 int chosenIndex = weigthedRandom();
-                Instantiate(tiles[chosenIndex].tile, position, Quaternion.identity, transform);
+                teselas[i, j] = Instantiate(tiles[chosenIndex].tile, position, Quaternion.identity, transform);
                 
                 if(tiles[chosenIndex].tile.name == "Tile 1" && UnityEngine.Random.value < 0.1)
                 {
                     Instantiate(tree, position, Quaternion.identity, treeFather);
+                }
+            }
+        }
+
+        for (int i = 0; i < maxFilas; i++)
+        {
+            for (int j = 0; j < maxColumnas; j++)
+            {
+                if (!teselas[i, j].GetComponent<Tile>().isClear())
+                {
+                    teselas[i, j].GetComponent<Tile>().SetSelected(true);
+                    Collider2D col = Physics2D.OverlapCircle(teselas[i, j].transform.position, 0.2f, LayerMask.GetMask("Obstacle"));
+                    if (col.GetComponent<Unit>())
+                    {
+                        col.GetComponent<Unit>().lastTile = teselas[i, j].GetComponent<Tile>();
+                    }
                 }
             }
         }

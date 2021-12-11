@@ -20,8 +20,6 @@ public class Agent : MonoBehaviour
     BehaviourTree tree;
     ForwardModel forwardModel;
 
-    Transform tilesFather;
-
     // Ally Units
     List<GameObject> allyUnits;
     
@@ -33,7 +31,6 @@ public class Agent : MonoBehaviour
         tree = new BehaviourTree();
 
         gameManager = FindObjectOfType<GM>();
-        tilesFather = GameObject.Find("Tiles").transform;
 
         enemiesCount = 0;
         Unit[] units = FindObjectsOfType<Unit>();
@@ -233,24 +230,25 @@ public class Agent : MonoBehaviour
     {
         float maxScore = 0f;
         int choosenIndex = 0;
+        Tile[] tiles = FindObjectsOfType<Tile>();
         Unit[] curretUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
 
-        for (int i = 0; i < tilesFather.childCount; i++)
+        for (int i = 0; i < tiles.Length; i++)
         {
-            if (tilesFather.GetChild(i).GetComponent<Tile>().isClear() && !tilesFather.GetChild(i).GetComponent<Tile>().GetSelected())
+            if (tiles[i].GetComponent<Tile>().isClear() && !tiles[i].GetComponent<Tile>().GetSelected())
             {
                 var score = 0f;
                 if (gameManager.createdUnit != null)
                 {
-                    score = forwardModel.MoveUnit(gameManager.createdUnit, tilesFather.GetChild(i).GetComponent<Tile>(), curretUnits, villages);
+                    score = forwardModel.MoveUnit(gameManager.createdUnit, tiles[i].GetComponent<Tile>(), curretUnits, villages);
                 }
-                else if(gameManager.createdVillage != null)
+                else if (gameManager.createdVillage != null)
                 {
-                    score = forwardModel.SetVillage(gameManager.createdVillage, tilesFather.GetChild(i).GetComponent<Tile>(), curretUnits, villages);
+                    score = forwardModel.SetVillage(gameManager.createdVillage, tiles[i].GetComponent<Tile>(), curretUnits, villages);
                 }
 
-                if(score > maxScore)
+                if (score > maxScore)
                 {
                     maxScore = score;
                     choosenIndex = i;
@@ -258,11 +256,11 @@ public class Agent : MonoBehaviour
             }
         }
 
-        Unit unit = Instantiate(gameManager.createdUnit, new Vector3(tilesFather.GetChild(choosenIndex).position.x, tilesFather.GetChild(choosenIndex).position.y, 0), Quaternion.identity);
+        Unit unit = Instantiate(gameManager.createdUnit, new Vector3(tiles[choosenIndex].transform.position.x, tiles[choosenIndex].transform.position.y, 0), Quaternion.identity);
         unit.hasMoved = true;
         unit.hasAttacked = true;
         allyUnits.Add(unit.gameObject);
-        unit.lastTile = tilesFather.GetChild(choosenIndex).GetComponent<Tile>();
+        unit.lastTile = tiles[choosenIndex].GetComponent<Tile>();
         unit.lastTile.SetSelected(true);
         gameManager.ResetTiles();
         gameManager.createdUnit = null;
