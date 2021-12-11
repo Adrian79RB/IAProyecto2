@@ -121,8 +121,8 @@ public class Unit : MonoBehaviour
 
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
         Debug.Log("Esta unidad: " + this.name + "; Nombre de la unidad selccionada" + gm.selectedUnit.name);
-        Debug.Log(villagesInRange.Count);
-        Debug.Log(gm.selectedUnit.villagesInRange.Count);
+        Debug.Log(villages.Count);
+        Debug.Log(gm.selectedUnit.villages.Count);
         if (col != null)
         {
             if (gm.selectedUnit.tag == "Siege")
@@ -433,7 +433,7 @@ public class Unit : MonoBehaviour
 
     void GetVillages()
     {
-        villagesInRange.Clear();
+        villages.Clear();
         Village[] villages = FindObjectsOfType<Village>();
         foreach (Village village in villages)
         {
@@ -442,9 +442,9 @@ public class Unit : MonoBehaviour
                 if (village.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag == "Siege")
                 {
                     // make sure you don't attack your allies
-                    villagesInRange.Add(village);
+                    villages.Add(village);
                     village.weaponIcon.SetActive(true);
-                    Debug.Log(gm.selectedUnit.villagesInRange.Contains(village));
+                    Debug.Log(gm.selectedUnit.villages.Contains(village));
                 }
             }
         }
