@@ -567,7 +567,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.02}
+  m_Offset: {x: 0.01640302, y: 0.02000001}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -578,7 +578,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75}
+  m_Size: {x: 1.0452543, y: 0.75}
   m_EdgeRadius: 0
 --- !u!114 &1888838832
 MonoBehaviour:
@@ -596,9 +596,12 @@ MonoBehaviour:
   hasMoved: 0
   tileSpeed: 2
   moveSpeed: 10
+  gm: {fileID: 0}
   attackRadius: 1
   hasAttacked: 0
   enemiesInRange: []
+  enemyVillages: []
+  villagesInRange: []
   playerNumber: 2
   weaponIcon: {fileID: 2438361236584856755}
   health: 5
@@ -610,8 +613,12 @@ MonoBehaviour:
   cost: 40
   deathEffect: {fileID: 8882834092664154197, guid: 43e58a09770a414488a4edf9a2bb5ea7,
     type: 3}
+  trees: []
   isKing: 0
+  lastTile: {fileID: 0}
   displayedText: {fileID: 0}
+  flying: 0
+  onRiver: 0
 --- !u!114 &1584046052
 MonoBehaviour:
   m_ObjectHideFlags: 0
