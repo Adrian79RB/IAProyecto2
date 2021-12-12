@@ -279,7 +279,7 @@ MonoBehaviour:
   attackDamageInfo: {fileID: 497586676}
   armorInfo: {fileID: 1168313183}
   defenseDamageInfo: {fileID: 794592849}
-  player1Gold: 0
+  player1Gold: 40
   player2Gold: 0
   player1GoldText: {fileID: 57358381}
   player2GoldText: {fileID: 1242379181}
