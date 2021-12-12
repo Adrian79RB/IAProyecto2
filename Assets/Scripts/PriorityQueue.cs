@@ -32,7 +32,7 @@ public class PriorityQueue
         }
         else
         {
-            if (raiz.prioridad > nuevo.prioridad)
+            if (raiz.prioridad >= nuevo.prioridad)
             { //Si el nuevo nodo sustituye al primero
                 NodoPQ auxiliar = raiz;
                 nuevo.siguiente = auxiliar;
@@ -43,7 +43,7 @@ public class PriorityQueue
             {
                 for (NodoPQ nodo = raiz; nodo != null; nodo = nodo.siguiente)
                 { // Si el nuevo nodo se situa entre dos
-                    if (nodo.anterior != null && nuevo.prioridad < nodo.prioridad && nuevo.prioridad > nodo.anterior.prioridad)
+                    if (nodo.anterior != null && nuevo.prioridad < nodo.prioridad && nuevo.prioridad >= nodo.anterior.prioridad)
                     {
                         nodo.anterior.siguiente = nuevo;
                         nuevo.anterior = nodo.anterior;

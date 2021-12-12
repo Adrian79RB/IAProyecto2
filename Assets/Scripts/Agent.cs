@@ -167,24 +167,30 @@ public class Agent : MonoBehaviour
             Unit ally = allyUnits[i].GetComponent<Unit>();
             List<Tile> tiles = ally.GetTilesArray();
             float maxScore = -Mathf.Infinity; // esto se puede convertir en lista y hacer la elección aleatoria
-            Tile targetTile = null;
+            List<Tile> targetTiles = new List<Tile>();
 
             foreach (Tile tile in tiles)
             {
                 var score = forwardModel.MoveUnit(ally, tile, currentUnits, villages);
-                if (score > maxScore)
+                if (score == maxScore)
+                    targetTiles.Add(tile);
+                else if(score > maxScore)
                 {
                     maxScore = score;
-                    targetTile = tile;
+                    targetTiles.Clear();
+                    targetTiles.Add(tile);
                 }
             }
 
-            if (targetTile)
+            if (targetTiles.Count > 0)
             {
+                gameManager.selectedUnit = ally;
                 ally.lastTile.SetSelected(false);
-                targetTile.GetComponent<Tile>().SetSelected(true);
-                ally.Move(targetTile.transform, i);
-                ally.lastTile = targetTile.GetComponent<Tile>();
+
+                int index = Mathf.RoundToInt(UnityEngine.Random.Range(0, targetTiles.Count - 1));
+                targetTiles[index].GetComponent<Tile>().SetSelected(true);
+                ally.Move(targetTiles[index].transform, i);
+
                 ally.ResetWeaponIcon();
             }
         }

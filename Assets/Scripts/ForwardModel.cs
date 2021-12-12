@@ -33,6 +33,7 @@ public class ForwardModel
         unitCopied.GetComponent<Unit>().hasMoved = true;
         unitCopied.GetComponent<Unit>().ResetWeaponIcon();
         unitCopied.GetComponent<Unit>().GetEnemies();
+        unitCopied.GetComponent<Unit>().GetVillages();
 
         for (int i = 0; i < units.Length; i++)
         {
@@ -47,9 +48,9 @@ public class ForwardModel
 
         for (int i = 0; i < units.Length; i++)
         {
-            if (units[i] == unit)
+            if (units[i] == unitCopied.GetComponent<Unit>())
             {
-                units[i] = unitCopied.GetComponent<Unit>();
+                units[i] = unit;
                 break;
             }
         }

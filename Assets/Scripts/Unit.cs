@@ -55,7 +55,6 @@ public class Unit : MonoBehaviour
 
     public bool flying;
     public bool onRiver;
-    public bool outOfRiver = false;
 
     private void Start()
     {
@@ -199,7 +198,7 @@ public class Unit : MonoBehaviour
             return;
         }
 
-        if(transform.tag == "Bat")
+        if (transform.tag == "Bat")
         {
             foreach (Tile tile in tiles)
             {
@@ -226,16 +225,10 @@ public class Unit : MonoBehaviour
             {
                 if (lastTile.arcs[i].isClear() && !lastTile.arcs[i].GetSelected())
                 {
-                    if (lastTile.arcs[i].tag == "river")
-                    {
-                        lastTile.arcs[i].Highlight();
-                        if (playerNumber == 2)
-                            walkableTiles.Add(lastTile.arcs[i]);
-                    }
-                    else
-                        RecurWalkableTilesGrafo(lastTile.arcs[i], 0);
+                    RecurWalkableTilesGrafo(lastTile.arcs[i], 0);
                 }
             }
+            tileSpeed = copyTileSpeed;
         }
     }
 
@@ -243,24 +236,23 @@ public class Unit : MonoBehaviour
     {
         if (step >= tileSpeed)
             return;
-
         step++;
-        currentTile.Highlight();
-        if (playerNumber == 2)
-            walkableTiles.Add(currentTile);
 
-        for(int i = 0; i < currentTile.arcs.Count; i++)
+        if (!currentTile.isWalkable)
         {
-            if(currentTile.arcs[i].isClear() && !currentTile.arcs[i].GetSelected())
+            currentTile.Highlight();
+            if (playerNumber == 2)
+                walkableTiles.Add(currentTile);
+        }
+
+        if (currentTile.tag == "river")
+            step = tileSpeed;
+
+        for (int i = 0; i < currentTile.arcs.Count; i++)
+        {
+            if (currentTile.arcs[i].isClear() && !currentTile.arcs[i].GetSelected())
             {
-                if(currentTile.arcs[i].tag == "river" && step < tileSpeed)
-                {
-                    currentTile.arcs[i].Highlight();
-                    if (playerNumber == 2)
-                        walkableTiles.Add(currentTile.arcs[i]);
-                }
-                else
-                    RecurWalkableTilesGrafo(currentTile.arcs[i], step);
+                RecurWalkableTilesGrafo(currentTile.arcs[i], step);
             }
         }
     }
@@ -275,7 +267,7 @@ public class Unit : MonoBehaviour
         {
             if (Mathf.Abs(transform.position.x - enemy.transform.position.x) + Mathf.Abs(transform.position.y - enemy.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
-                if (enemy.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag != "Ariete") { // make sure you don't attack your allies
+                if (enemy.playerNumber != gm.playerTurn && !hasAttacked && transform.tag != "Ariete") { // make sure you don't attack your allies
                     enemiesInRange.Add(enemy);
                     enemy.weaponIcon.SetActive(true);
                 }
@@ -286,10 +278,10 @@ public class Unit : MonoBehaviour
     public void Move(Transform movePos, int unitIndex)
     {
         gm.ResetTiles();
-        Debug.Log("Antes de obtener camino");
-        PathfindingClass.obtenerCamino(movePos.GetComponent<Tile>(), lastTile);
+        List<Tile> path = new List<Tile>();
+        PathfindingClass.obtenerCamino(movePos.GetComponent<Tile>(), lastTile, ref path);
 
-        StartCoroutine(StartMovement(movePos, unitIndex));
+        StartCoroutine(StartMovement(movePos, path, unitIndex));
     }
 
     public void Attack(Unit enemy) {
@@ -376,6 +368,7 @@ public class Unit : MonoBehaviour
                 gm.ShowVictoryPanel(enemy.playerNumber);
             }
 
+            gm.ResetTiles();
             GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
             gm.RemoveInfoPanel(enemy);
             enemy.lastTile.SetSelected(false);
@@ -478,14 +471,15 @@ public class Unit : MonoBehaviour
         }
     }
 
-    IEnumerator StartMovement(Transform movePos, int unitIndex)
+    IEnumerator StartMovement(Transform movePos, List<Tile> path, int unitIndex)
     { // Moves the character to his new position.
         if (playerNumber == 2)
         {
             yield return new WaitForSeconds(0.1f * unitIndex);
         }
-        Tile target = lastTile.father;
-        //Debug.Log("Padre: " + lastTile.father);
+
+        if(playerNumber == 2)
+            Debug.Log("Unit: " + transform.name + "; Ultima Tesela: " + lastTile.transform.position + "; target: " + movePos.position);
 
         if(transform.tag == "Bat")
         {
@@ -502,8 +496,11 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            while (target.transform != movePos)
+            int i = 0;
+            Tile target = path[i];
+            while (target != null && i < path.Count && transform.position != movePos.position)
             {
+                target = path[i];
                 Collider2D[] coll = new Collider2D[1];
                 ContactFilter2D filter = new ContactFilter2D();
 
@@ -548,17 +545,13 @@ public class Unit : MonoBehaviour
                     }
                 }
 
-                target = target.father;
+                i++;
             }
         }
-        
 
-        outOfRiver = true;
-
-        if (outOfRiver)
+        if (movePos.tag != "river")
         {
             onRiver = false;
-            outOfRiver = false;
             tileSpeed = copyTileSpeed;
         }
 
@@ -568,10 +561,11 @@ public class Unit : MonoBehaviour
         GetVillages();
         gm.MoveInfoPanel(this);
         
-        transform.position = movePos.position;
+        if (playerNumber == 2)
+            lastTile = movePos.GetComponent<Tile>();
     }
 
-    void GetVillages()
+    public void GetVillages()
     {
         villagesInRange.Clear();
         Village[] villages = FindObjectsOfType<Village>();
@@ -579,7 +573,7 @@ public class Unit : MonoBehaviour
         {
             if (Mathf.Abs(transform.position.x - village.transform.position.x) + Mathf.Abs(transform.position.y - village.transform.position.y) <= attackRadius) // check is the enemy is near enough to attack
             {
-                if (village.playerNumber != gm.playerTurn && !hasAttacked && gm.selectedUnit.tag == "Ariete")
+                if (village.playerNumber != gm.playerTurn && !hasAttacked && transform.tag == "Ariete")
                 {
                     // make sure you don't attack your allies
                     villagesInRange.Add(village);

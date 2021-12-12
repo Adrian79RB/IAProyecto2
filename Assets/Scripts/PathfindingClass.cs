@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class PathfindingClass
 {
-    public static void obtenerCamino(Tile target, Tile start)
+    public static void obtenerCamino(Tile target, Tile start, ref List<Tile> ordenFather )
     {
         //Creamos el nodo inicial del pathfinding
         Tile nodoActual = target;
@@ -22,7 +22,6 @@ public static class PathfindingClass
         while (openedQueue.getLegth() > 0)
         {
             nodoActual = openedQueue.Devolver();
-
             if (nodoActual == start)
                 break;
 
@@ -57,7 +56,6 @@ public static class PathfindingClass
                 nextNode.estimatedTotalCost = distanceToNextNode + distanceToStart;
                 nextNode.father = nodoActual;
 
-
                 if (!openedQueue.EncontrarNodo(nextNode) && !closedQueue.EncontrarNodo(nextNode))
                     openedQueue.Insertar(nextNode, nextNode.estimatedTotalCost);
                 else
@@ -69,15 +67,13 @@ public static class PathfindingClass
 
         if (nodoActual == start)
         {
-            /*while (nodoActual != target)
+            while (nodoActual != target)
             {
-                Debug.Log("Nodo actual: " + nodoActual.transform.position);
-                nodesList[nodoActual.getId()] = nodoActual.father.getId();
-                Nodo aux = nodoActual.father;
-                //nodoActual.father = null;
-                nodoActual = aux;
+                Debug.Log("Hola");
+                ordenFather.Add(nodoActual);
                 nodoActual = nodoActual.father;
-            }*/
+            }
+            ordenFather.Add(target);
         }
     }
 }

@@ -6404,7 +6404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxColumnas: 27
-  maxFilas: 19
+  maxFilas: 16
   tiles:
   - peso: 6
     tile: {fileID: 2248840791852114595, guid: 13556a664cb41b542bf2d14542bff25e, type: 3}
