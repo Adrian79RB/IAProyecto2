@@ -507,7 +507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSelected: 0
   hasMoved: 0
-  tileSpeed: 2
+  tileSpeed: 3
   moveSpeed: 10
   gm: {fileID: 0}
   attackRadius: 1

@@ -69,7 +69,6 @@ public static class PathfindingClass
         {
             while (nodoActual != target)
             {
-                Debug.Log("Hola");
                 ordenFather.Add(nodoActual);
                 nodoActual = nodoActual.father;
             }

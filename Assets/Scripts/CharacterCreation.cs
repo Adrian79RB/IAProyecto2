@@ -61,7 +61,7 @@ public class CharacterCreation : MonoBehaviour
         gm.createdUnit = unit;
 
         DeselectUnit();
-        SetCreatableTiles();
+        SetCreatableTilesForUnits();
     }
 
     public void BuyVillage(Village village) {
@@ -85,19 +85,52 @@ public class CharacterCreation : MonoBehaviour
 
         DeselectUnit();
 
-        SetCreatableTiles();
+        SetCreatableTilesForVillages();
 
     }
 
-    void SetCreatableTiles() {
+    void SetCreatableTilesForUnits()
+    {
         gm.ResetTiles();
 
-        Tile[] tiles = FindObjectsOfType<Tile>();
-        foreach (Tile tile in tiles)
+        Village[] villages = FindObjectsOfType<Village>();
+
+        foreach (Village village in villages)
         {
-            if (tile.isClear())
+            if (village.playerNumber == gm.playerTurn)
             {
-                tile.SetCreatable();
+                Tile tile = village.lastTile;
+                for (int i = 0; i < tile.arcs.Count; i++)
+                {
+                    if (tile.arcs[i].isClear() && !tile.arcs[i].GetSelected())
+                        tile.arcs[i].SetCreatable();
+                }
+            }
+        }
+    }
+
+    void SetCreatableTilesForVillages()
+    {
+        gm.ResetTiles();
+
+        Village[] villages = FindObjectsOfType<Village>();
+
+        foreach (Village village in villages)
+        {
+            if (village.playerNumber == gm.playerTurn)
+            {
+                Tile tile = village.lastTile;
+                for (int i = 0; i < tile.arcs.Count; i++)
+                {
+                    if (tile.arcs[i].isClear() && !tile.arcs[i].GetSelected())
+                        tile.arcs[i].SetCreatable();
+
+                    for (int j = 0; j < tile.arcs[i].arcs.Count; j++)
+                    {
+                        if (tile.arcs[i].arcs[j].isClear() && !tile.arcs[i].arcs[j].GetSelected() && !tile.arcs[i].arcs[j].isCreatable)
+                            tile.arcs[i].arcs[j].SetCreatable();
+                    }
+                }
             }
         }
     }

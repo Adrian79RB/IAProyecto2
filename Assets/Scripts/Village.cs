@@ -16,6 +16,8 @@ public class Village : MonoBehaviour
     public Unit unit;
     public bool isSelected;
 
+    public Tile lastTile;
+
     // Attack Stats
     public int armor;
 
@@ -36,23 +38,14 @@ public class Village : MonoBehaviour
     public void OnMouseDown()
     {
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
-        Village village = col.GetComponent<Village>();
-        if (gm.selectedVillage != null)
+        if (col != null)
         {
-            gm.selectedVillage = village;
-            Debug.Log(gm.selectedVillage);
-            Debug.Log(village);
-            //Debug.Log(gm.selectedUnit.villages.Contains(village));
-            //Debug.Log(gm.selectedUnit);
-            //if (gm.selectedUnit.villages.Contains(village))
+            Village village = col.GetComponent<Village>();
+            if (village != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Ariete")
             { // does the currently selected unit have in his list the enemy we just clicked on
-                //Debug.Log("Entra3");
-                //gm.selectedUnit.AttackVillage(village);
-
+                if(gm.selectedUnit.enemyVillages.Contains(village) && !gm.selectedUnit.hasAttacked)
+                    gm.selectedUnit.AttackVillage(village);
             }
-        }
-        else{
-            gm.selectedVillage = village;
         }
     }
 

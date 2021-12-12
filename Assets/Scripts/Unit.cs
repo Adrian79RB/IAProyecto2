@@ -121,7 +121,7 @@ public class Unit : MonoBehaviour
 				}
 				
                 GetWalkableTiles();
-                if(transform.tag == "Siege"){
+                if(transform.tag == "Ariete"){
                     GetVillages();
                 }
                 else{
@@ -136,21 +136,17 @@ public class Unit : MonoBehaviour
         Collider2D col = Physics2D.OverlapCircle(Camera.main.ScreenToWorldPoint(Input.mousePosition), 0.15f);
         if (col != null)
         {
-            if (gm.selectedUnit != null && gm.selectedUnit.tag == "Ariete")
-                gm.selectedUnit.hasAttacked = false;
             Unit unit = col.GetComponent<Unit>(); // double check that what we clicked on is a unit
             
             //Village village = col.GetComponent<Village>();
             //revisar esto. Probablemente no sea necesario
-            if (unit != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Siege")
+            if (unit != null && gm.selectedUnit != null && gm.selectedUnit.tag != "Ariete")
             {
                 if (gm.selectedUnit.enemiesInRange.Contains(unit) && !gm.selectedUnit.hasAttacked )
                 { // does the currently selected unit have in his list the enemy we just clicked on
                     gm.selectedUnit.Attack(unit);
 
                 }
-                
-               
             }
         }
     }
@@ -441,8 +437,10 @@ public class Unit : MonoBehaviour
                     camAnim.SetTrigger("shake");
                 }
 
-
+                gm.ResetTiles();
                 GetWalkableTiles(); // check for new walkable tiles (if enemy has died we can now walk on his tile)
+                village.lastTile.SetSelected(false);
+                village.lastTile = null;
                 Destroy(village.gameObject);
 
             }
@@ -458,6 +456,8 @@ public class Unit : MonoBehaviour
 
                 gm.ResetTiles(); // reset tiles when we die
                 gm.RemoveInfoPanel(this);
+                lastTile.SetSelected(false);
+                lastTile = null;
                 Destroy(gameObject);
             }
 
@@ -483,9 +483,6 @@ public class Unit : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f * unitIndex);
         }
-
-        if(playerNumber == 2)
-            Debug.Log("Unit: " + transform.name + "; Ultima Tesela: " + lastTile.transform.position + "; target: " + movePos.position);
 
         if(transform.tag == "Bat")
         {

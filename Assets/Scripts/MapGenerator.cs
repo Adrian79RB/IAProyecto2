@@ -128,6 +128,11 @@ public class MapGenerator : MonoBehaviour
                     {
                         col.GetComponent<Unit>().lastTile = teselas[i, j].GetComponent<Tile>();
                     }
+
+                    if (col.GetComponent<Village>())
+                    {
+                        col.GetComponent<Village>().lastTile = teselas[i, j].GetComponent<Tile>();
+                    }
                 }
             }
         }

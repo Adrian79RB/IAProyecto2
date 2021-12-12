@@ -637,7 +637,7 @@ MonoBehaviour:
   enemyVillages: []
   playerNumber: 2
   weaponIcon: {fileID: 179943396338207515}
-  health: 20
+  health: 10
   attackDamage: 5
   defenseDamage: 4
   armor: 1
@@ -678,7 +678,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.14}
+  m_Offset: {x: -0.07484901, y: 0.020455599}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -689,7 +689,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.71, y: 3.61}
+  m_Size: {x: 3.5574696, y: 3.9500217}
   m_EdgeRadius: 0
 --- !u!95 &179943397156523660
 Animator:
