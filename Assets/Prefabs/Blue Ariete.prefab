@@ -101,10 +101,11 @@ MonoBehaviour:
   hasMoved: 0
   tileSpeed: 1
   moveSpeed: 10
+  gm: {fileID: 0}
   attackRadius: 1
   hasAttacked: 0
   enemiesInRange: []
-  villagesInRange: []
+  enemyVillages: []
   playerNumber: 2
   weaponIcon: {fileID: 5927487738933377550}
   health: 5
@@ -118,7 +119,10 @@ MonoBehaviour:
     type: 3}
   trees: []
   isKing: 0
+  lastTile: {fileID: 0}
   displayedText: {fileID: 0}
+  flying: 0
+  onRiver: 0
 --- !u!114 &1584046052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +385,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 9cd17d6c37a502748b4f2d7b6f4ce021, type: 3}
   m_Color: {r: 0.19784619, g: 0.26871285, b: 0.735849, a: 1}
   m_FlipX: 0

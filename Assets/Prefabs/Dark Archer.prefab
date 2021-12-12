@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2749915315847260833, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -154,7 +154,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: 1
   m_Sprite: {fileID: -3480973932069740594, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -236,7 +236,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7459675896350130267, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -318,7 +318,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8555599076299583737, guid: c0420fba51c992a48b4e94d9f648a34e,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.29411766}
@@ -400,7 +400,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -4357873696111671151, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -482,7 +482,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: 1
   m_Sprite: {fileID: -6420924976260235034, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -574,7 +574,6 @@ MonoBehaviour:
   hasAttacked: 0
   enemiesInRange: []
   enemyVillages: []
-  villagesInRange: []
   playerNumber: 1
   weaponIcon: {fileID: 3293640991254917044}
   health: 4
@@ -605,7 +604,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.24714208, y: 0}
+  m_Offset: {x: -0.22939873, y: 0.21296883}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -616,7 +615,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.241425, y: 3.5}
+  m_Size: {x: 4.347885, y: 4.387371}
   m_EdgeRadius: 0
 --- !u!114 &3293640991218369726
 MonoBehaviour:
@@ -781,7 +780,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8099866371032744366, guid: 0f550feb8175f8f4fb9d9e4093689525,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

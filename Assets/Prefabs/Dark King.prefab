@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5063757089552967044, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -236,7 +236,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 2
   m_Sprite: {fileID: -7073460360509291357, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -328,7 +328,6 @@ MonoBehaviour:
   hasAttacked: 0
   enemiesInRange: []
   enemyVillages: []
-  villagesInRange: []
   playerNumber: 1
   weaponIcon: {fileID: 484875170324854395}
   health: 20
@@ -632,7 +631,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2619349627002144871, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -714,7 +713,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7984217992960381562, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 553884121995667778, guid: 8adbdd303e665c44784a17537bc2da7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -150,7 +150,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7984217992960381562, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -395,7 +395,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5063757089552967044, guid: 28f2ad2074032184492666aec1623f38,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -562,7 +562,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7530631117008270979, guid: 8adbdd303e665c44784a17537bc2da7b,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -635,7 +635,6 @@ MonoBehaviour:
   hasAttacked: 0
   enemiesInRange: []
   enemyVillages: []
-  villagesInRange: []
   playerNumber: 2
   weaponIcon: {fileID: 179943396338207515}
   health: 20
@@ -653,7 +652,6 @@ MonoBehaviour:
   displayedText: {fileID: 0}
   flying: 0
   onRiver: 0
-  outOfRiver: 0
 --- !u!114 &179943397156523650
 MonoBehaviour:
   m_ObjectHideFlags: 0

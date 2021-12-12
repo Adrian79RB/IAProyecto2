@@ -150,7 +150,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: 1
   m_Sprite: {fileID: 4469707333657897994, guid: d528151b4fb391d44a921b6baf6f002c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -232,7 +232,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 824635215509593453, guid: d528151b4fb391d44a921b6baf6f002c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -8
+  m_SortingOrder: 1
   m_Sprite: {fileID: -7888572027569737909, guid: d528151b4fb391d44a921b6baf6f002c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -395,7 +395,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 214413123
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8555599076299583737, guid: c0420fba51c992a48b4e94d9f648a34e,
     type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.29411766}
@@ -437,7 +437,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4446637798450979530}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20, y: 2, z: -0.15448211}
+  m_LocalPosition: {x: -20, y: 2, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children:
   - {fileID: 4446637799576711689}
@@ -514,7 +514,6 @@ MonoBehaviour:
   hasAttacked: 0
   enemiesInRange: []
   enemyVillages: []
-  villagesInRange: []
   playerNumber: 1
   weaponIcon: {fileID: 699492358}
   health: 5
@@ -710,7 +709,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -6
+  m_SortingOrder: 1
   m_Sprite: {fileID: 8812918150279519865, guid: d528151b4fb391d44a921b6baf6f002c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -795,7 +794,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -6923740119856145308, guid: d528151b4fb391d44a921b6baf6f002c,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

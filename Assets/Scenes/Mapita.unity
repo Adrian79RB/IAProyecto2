@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedUnit: {fileID: 0}
+  selectedVillage: {fileID: 0}
   playerTurn: 1
   selectedUnitSquare: {fileID: 1172750056}
   playerIcon: {fileID: 921867502}
@@ -6426,6 +6427,7 @@ MonoBehaviour:
   - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
   - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
   - {fileID: 4688297137751264698, guid: 76ee34c1b9be29f4ebb1071fbfe8504a, type: 3}
+  - {fileID: 203797387408590348, guid: 69c45bad53862d04496347dd4754f2cd, type: 3}
   prefabsRed:
   - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
   - {fileID: 3293640991218369701, guid: e29861ac58e55d04ca67678a523a8c67, type: 3}
@@ -6440,6 +6442,7 @@ MonoBehaviour:
   - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
   - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
   - {fileID: 7767452286446655037, guid: da3435065a89e2442b5138b621f7826c, type: 3}
+  - {fileID: 4446637798450979530, guid: fd1a9553fd6aec3409b95fa9d2cc699b, type: 3}
   offSet: 1
 --- !u!4 &1682529151
 Transform:
