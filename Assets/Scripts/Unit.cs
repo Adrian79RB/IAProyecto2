@@ -419,7 +419,7 @@ public class Unit : MonoBehaviour
     public void AttackVillage(Village village){
         hasAttacked = true;
         int villageDamege = attackDamage - village.armor;
-        int unitDamage = village.defenseDamage - armor;
+        
 
         if (transform.tag == "Siege")
         {
@@ -430,16 +430,7 @@ public class Unit : MonoBehaviour
                 DamageIcon d = Instantiate(damageIcon, village.transform.position, Quaternion.identity);
                 d.Setup(villageDamege);
             }
-            else
-            {
-                if (unitDamage >= 1)
-                {
-                    health -= unitDamage;
-                    UpdateHealthDisplay();
-                    DamageIcon d = Instantiate(damageIcon, transform.position, Quaternion.identity);
-                    d.Setup(unitDamage);
-                }
-            }
+            
 
             if (village.health <= 0)
             {
