@@ -637,7 +637,7 @@ MonoBehaviour:
   enemyVillages: []
   playerNumber: 2
   weaponIcon: {fileID: 179943396338207515}
-  health: 10
+  health: 15
   attackDamage: 5
   defenseDamage: 4
   armor: 1

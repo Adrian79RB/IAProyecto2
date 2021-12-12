@@ -235,11 +235,12 @@ public class Agent : MonoBehaviour
     {
         float maxScore = 0f;
         int choosenIndex = 0;
-        Tile[] tiles = FindObjectsOfType<Tile>();
+        List<Tile> tiles = characterCreation.creatableTiles;
+
         Unit[] curretUnits = FindObjectsOfType<Unit>();
         Village[] villages = FindObjectsOfType<Village>();
 
-        for (int i = 0; i < tiles.Length; i++)
+        for (int i = 0; i < tiles.Count; i++)
         {
             if (tiles[i].GetComponent<Tile>().isClear() && !tiles[i].GetComponent<Tile>().GetSelected())
             {

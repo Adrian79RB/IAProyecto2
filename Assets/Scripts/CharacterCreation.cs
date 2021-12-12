@@ -14,6 +14,8 @@ public class CharacterCreation : MonoBehaviour
     public GameObject player1Menu;
     public GameObject player2Menu;
 
+    public List<Tile> creatableTiles;
+
     private void Start()
     {
         gm = FindObjectOfType<GM>();
@@ -92,6 +94,9 @@ public class CharacterCreation : MonoBehaviour
     void SetCreatableTilesForUnits()
     {
         gm.ResetTiles();
+        
+        if(gm.playerTurn == 2)
+            creatableTiles = new List<Tile>();
 
         Village[] villages = FindObjectsOfType<Village>();
 
@@ -103,7 +108,11 @@ public class CharacterCreation : MonoBehaviour
                 for (int i = 0; i < tile.arcs.Count; i++)
                 {
                     if (tile.arcs[i].isClear() && !tile.arcs[i].GetSelected())
+                    {
                         tile.arcs[i].SetCreatable();
+                        if (gm.playerTurn == 2)
+                            creatableTiles.Add(tile.arcs[i]);
+                    }
                 }
             }
         }
@@ -113,6 +122,9 @@ public class CharacterCreation : MonoBehaviour
     {
         gm.ResetTiles();
 
+        if (gm.playerTurn == 2)
+            creatableTiles = new List<Tile>();
+
         Village[] villages = FindObjectsOfType<Village>();
 
         foreach (Village village in villages)
@@ -123,12 +135,20 @@ public class CharacterCreation : MonoBehaviour
                 for (int i = 0; i < tile.arcs.Count; i++)
                 {
                     if (tile.arcs[i].isClear() && !tile.arcs[i].GetSelected())
+                    {
                         tile.arcs[i].SetCreatable();
+                        if (gm.playerTurn == 2)
+                            creatableTiles.Add(tile.arcs[i]);
+                    }
 
                     for (int j = 0; j < tile.arcs[i].arcs.Count; j++)
                     {
                         if (tile.arcs[i].arcs[j].isClear() && !tile.arcs[i].arcs[j].GetSelected() && !tile.arcs[i].arcs[j].isCreatable)
+                        {
                             tile.arcs[i].arcs[j].SetCreatable();
+                            if (gm.playerTurn == 2)
+                                creatableTiles.Add(tile.arcs[i]);
+                        }
                     }
                 }
             }

@@ -102,10 +102,12 @@ public class Tile : MonoBehaviour
             Unit unit = Instantiate(gm.createdUnit, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
             unit.hasMoved = true;
             unit.hasAttacked = true;
+            unit.lastTile = this;
             gm.ResetTiles();
             gm.createdUnit = null;
         } else if (isCreatable == true && gm.createdVillage != null) {
-            Instantiate(gm.createdVillage, new Vector3(transform.position.x, transform.position.y, 0) , Quaternion.identity);
+            Village village = Instantiate(gm.createdVillage, new Vector3(transform.position.x, transform.position.y, 0) , Quaternion.identity);
+            village.lastTile = this;
             gm.ResetTiles();
             gm.createdVillage = null;
         }
